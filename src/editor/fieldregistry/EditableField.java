@@ -3,19 +3,19 @@ package editor.fieldregistry;
 import java.lang.reflect.Field;
 
 import lab.component.LabComponent;
-import lab.component.input.InputComponent;
+import lab.component.swing.SwingComponent;
 
 public class EditableField {
 
 	private final Field field;
-	private final InputComponent input;
+	private final SwingComponent input;
 	
-	public EditableField(Field field, InputComponent input) {
+	public EditableField(Field field, SwingComponent input) {
 		this.field = field;
 		this.input = input;
 	}
 	
-	public InputComponent getInputComponent() {
+	public SwingComponent getInputComponent() {
 		return input;
 	}
 	

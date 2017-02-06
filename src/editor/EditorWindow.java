@@ -10,7 +10,7 @@ import lab.component.ClickableArea;
 import lab.component.EmptyComponent;
 import lab.component.LabComponent;
 import lab.component.UserComponentResizing;
-import lab.component.input.ButtonComponent;
+import lab.component.swing.input.ButtonComponent;
 
 public class EditorWindow extends LabComponent {
 	

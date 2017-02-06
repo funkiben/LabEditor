@@ -15,14 +15,14 @@ import lab.component.container.GraduatedCylinder;
 import lab.component.data.Graph;
 import lab.component.fx.Flame;
 import lab.component.fx.ParticleSystem;
-import lab.component.input.ButtonComponent;
-import lab.component.input.LabelComponent;
-import lab.component.input.SliderComponent;
-import lab.component.input.SwitchComponent;
-import lab.component.input.TextFieldComponent;
 import lab.component.sensor.Manometer;
 import lab.component.sensor.Thermometer;
-import lab.component.input.DropdownComponent;
+import lab.component.swing.LabelComponent;
+import lab.component.swing.input.ButtonComponent;
+import lab.component.swing.input.DropdownComponent;
+import lab.component.swing.input.SliderComponent;
+import lab.component.swing.input.SwitchComponent;
+import lab.component.swing.input.TextFieldComponent;
 
 public class ComponentPicker extends LabComponent {
 	

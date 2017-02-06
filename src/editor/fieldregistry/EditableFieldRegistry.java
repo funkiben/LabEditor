@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import lab.component.LabComponent;
-import lab.component.input.InputComponent;
+import lab.component.swing.SwingComponent;
 
 public class EditableFieldRegistry {
 
@@ -24,13 +24,29 @@ public class EditableFieldRegistry {
 			e.printStackTrace();
 		}
 		
+		//registerField(LabComponent.class, "offsetX", new TextFieldComponent())
+		
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static List<EditableField> getEditableFields(Class<? extends LabComponent> c) {
+		List<EditableField> editableFields = new ArrayList<EditableField>();
+		
+		editableFields.addAll(registry.get(c));
+		
+		if (c.getSuperclass() != Object.class) {
+			editableFields.addAll(getEditableFields((Class<? extends LabComponent>) c.getSuperclass()));
+		}
+		
+		return editableFields;
 	}
 	
 	public static Set<Class<? extends LabComponent>> getEditableLabComponents() {
 		return registry.keySet();
 	}
 	
-	public static void registerField(Class<? extends LabComponent> clazz, String fieldName, InputComponent input) {
+	public static void registerField(Class<? extends LabComponent> clazz, String fieldName, SwingComponent input) {
 		Field field = null;
 		
 		try {
