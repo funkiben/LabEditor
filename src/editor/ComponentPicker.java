@@ -22,7 +22,7 @@ import lab.component.swing.input.ButtonComponent;
 import lab.component.swing.input.DropdownComponent;
 import lab.component.swing.input.SliderComponent;
 import lab.component.swing.input.SwitchComponent;
-import lab.component.swing.input.TextFieldComponent;
+import lab.component.swing.input.NumberFieldComponent;
 
 public class ComponentPicker extends LabComponent {
 	
@@ -44,7 +44,7 @@ public class ComponentPicker extends LabComponent {
 		LabelComponent.class,
 		SliderComponent.class,
 		SwitchComponent.class,
-		TextFieldComponent.class
+		NumberFieldComponent.class
 	};
 	
 	private static final Map<Class<? extends LabComponent>, String> componentNameAliases = new HashMap<Class<? extends LabComponent>, String>();
@@ -53,7 +53,7 @@ public class ComponentPicker extends LabComponent {
 		componentNameAliases.put(BunsenBurner.class, "Bunsen Burner");
 		componentNameAliases.put(GraduatedCylinder.class, "Grad. Cylinder");
 		componentNameAliases.put(ParticleSystem.class, "Particles");
-		componentNameAliases.put(TextFieldComponent.class, "Text Field");
+		componentNameAliases.put(NumberFieldComponent.class, "Text Field");
 	}
 	
 	

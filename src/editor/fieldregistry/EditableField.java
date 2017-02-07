@@ -8,11 +8,17 @@ import lab.component.swing.SwingComponent;
 public class EditableField {
 
 	private final Field field;
+	private final String name;
 	private final SwingComponent input;
 	
-	public EditableField(Field field, SwingComponent input) {
+	public EditableField(Field field, String name, SwingComponent input) {
 		this.field = field;
+		this.name = name;
 		this.input = input;
+	}
+	
+	public EditableField(Field field, SwingComponent input) {
+		this(field, field.getName(), input);
 	}
 	
 	public SwingComponent getInputComponent() {
@@ -20,7 +26,7 @@ public class EditableField {
 	}
 	
 	public String getName() {
-		return field.getName();
+		return name;
 	}
 	
 	public Object getValue(LabComponent c) {

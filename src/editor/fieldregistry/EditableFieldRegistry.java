@@ -9,7 +9,10 @@ import java.util.Map;
 import java.util.Set;
 
 import lab.component.LabComponent;
+import lab.component.MeasurableComponent;
 import lab.component.swing.SwingComponent;
+import lab.component.swing.input.CheckBoxComponent;
+import lab.component.swing.input.NumberFieldComponent;
 
 public class EditableFieldRegistry {
 
@@ -24,7 +27,17 @@ public class EditableFieldRegistry {
 			e.printStackTrace();
 		}
 		
-		//registerField(LabComponent.class, "offsetX", new TextFieldComponent())
+		registerField(LabComponent.class, "offsetX", "X", new NumberFieldComponent(100, 20, "####"));
+		registerField(LabComponent.class, "offsetY", "Y", new NumberFieldComponent(100, 20, "####"));
+		registerField(LabComponent.class, "zOrder", "Z", new NumberFieldComponent(100, 20, "####"));
+		registerField(LabComponent.class, "width", "Width", new NumberFieldComponent(100, 20, "####"));
+		registerField(LabComponent.class, "height", "Height", new NumberFieldComponent(100, 20, "####"));
+		registerField(LabComponent.class, "visible", "Visible", new CheckBoxComponent(30, 30, ""));
+		
+		registerField(MeasurableComponent.class, "value", "Value", new NumberFieldComponent(100, 20, "####"));
+		registerField(MeasurableComponent.class, "showValue", "Show Value", new CheckBoxComponent(30, 30, ""));
+		
+		
 		
 		
 	}
@@ -47,6 +60,10 @@ public class EditableFieldRegistry {
 	}
 	
 	public static void registerField(Class<? extends LabComponent> clazz, String fieldName, SwingComponent input) {
+		registerField(clazz, fieldName, fieldName, input);
+	}
+	
+	public static void registerField(Class<? extends LabComponent> clazz, String fieldName, String aliasName, SwingComponent input) {
 		Field field = null;
 		
 		try {
@@ -60,12 +77,12 @@ public class EditableFieldRegistry {
 
 		if (registry.containsKey(clazz)) {
 			fields = registry.get(clazz);
-			fields.add(new EditableField(field, input));
+			fields.add(new EditableField(field, aliasName, input));
 			
 		} else {
 			fields = new ArrayList<EditableField>();
 			
-			fields.add(new EditableField(field, input));
+			fields.add(new EditableField(field, aliasName, input));
 			
 			registry.put(clazz,  fields);
 		}
