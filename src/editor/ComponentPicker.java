@@ -78,7 +78,7 @@ public class ComponentPicker extends LabComponent {
 
 	private void createButtonFor(Class<? extends LabComponent> component) {
 		
-		ButtonComponent button = new ButtonComponent(80, 20, getName(component)) {
+		ButtonComponent button = new ButtonComponent(100, 20, getName(component)) {
 			@Override
 			public void doSomething() {
 				
@@ -88,7 +88,7 @@ public class ComponentPicker extends LabComponent {
 		button.setOffsetX(5);
 		button.setOffsetY(5);
 		
-		button.setFontSize(10);
+		button.setFontSize(12);
 		
 		addChild(button);
 	}
