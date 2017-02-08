@@ -1,0 +1,23 @@
+1. Frame for placing components and constructing simulation
+
+2. Drag and drop component feature from Component Picker window to simulation editor window
+
+3. Component inspector window for editing LabComponent fields <- might need to be more than just accessing LabComponent fields (i.e. below task)
+
+3.5 Map out all editable fields with appropriate InputComponent
+
+4. Graduation editing? (graduations aren't a LabComponent...)
+
+5. Menu bar for opening different windows, saving, loading, and exporting
+
+6. Way to run the simulation in the editor?
+
+7. Some sort of way to link LabComponents together (maybe use QT's single slot method?) <- needs equation support too
+
+8. Different tools for editing simulation: move, select, resize
+
+9. Probably will need a new component: dropdown thing that shows other components when clicked, this will make component inspector better organized
+
+10. Window snapping like in Eclipse and Unity?
+
+11. Instruction manual!
