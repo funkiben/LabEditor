@@ -10,7 +10,7 @@ import lab.component.ClickableArea;
 import lab.component.EmptyComponent;
 import lab.component.LabComponent;
 import lab.component.UserComponentResizing;
-import lab.component.swing.input.ButtonComponent;
+import lab.component.swing.input.Button;
 
 public class EditorWindow extends LabComponent {
 	
@@ -21,7 +21,7 @@ public class EditorWindow extends LabComponent {
 	private String name;
 	private final LabComponent content;
 	private final LabComponent dragBar;
-	private final ButtonComponent closeButton;
+	private final Button closeButton;
 	private ClickableArea dragBarDragArea;
 	private final UserComponentResizing resizing = new UserComponentResizing(this, 20, 20);
 	
@@ -39,7 +39,7 @@ public class EditorWindow extends LabComponent {
 		
 		final EditorWindow t = this;
 		
-		closeButton = new ButtonComponent(20, 20, "X") {
+		closeButton = new Button(20, 20, "X") {
 			@Override
 			public void doSomething() {
 				t.setVisible(false);

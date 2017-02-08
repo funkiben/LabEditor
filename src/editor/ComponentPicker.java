@@ -17,12 +17,12 @@ import lab.component.fx.Flame;
 import lab.component.fx.ParticleSystem;
 import lab.component.sensor.Manometer;
 import lab.component.sensor.Thermometer;
-import lab.component.swing.LabelComponent;
-import lab.component.swing.input.ButtonComponent;
-import lab.component.swing.input.DropdownComponent;
-import lab.component.swing.input.SliderComponent;
-import lab.component.swing.input.SwitchComponent;
-import lab.component.swing.input.NumberFieldComponent;
+import lab.component.swing.Label;
+import lab.component.swing.input.Button;
+import lab.component.swing.input.DropdownMenu;
+import lab.component.swing.input.NumberField;
+import lab.component.swing.input.Slider;
+import lab.component.swing.input.Switch;
 
 public class ComponentPicker extends LabComponent {
 	
@@ -39,12 +39,12 @@ public class ComponentPicker extends LabComponent {
 		Thermometer.class,
 		Flame.class,
 		Graph.class,
-		ButtonComponent.class,
-		DropdownComponent.class,
-		LabelComponent.class,
-		SliderComponent.class,
-		SwitchComponent.class,
-		NumberFieldComponent.class
+		Button.class,
+		DropdownMenu.class,
+		Label.class,
+		Slider.class,
+		Switch.class,
+		NumberField.class
 	};
 	
 	private static final Map<Class<? extends LabComponent>, String> componentNameAliases = new HashMap<Class<? extends LabComponent>, String>();
@@ -53,7 +53,7 @@ public class ComponentPicker extends LabComponent {
 		componentNameAliases.put(BunsenBurner.class, "Bunsen Burner");
 		componentNameAliases.put(GraduatedCylinder.class, "Grad. Cylinder");
 		componentNameAliases.put(ParticleSystem.class, "Particles");
-		componentNameAliases.put(NumberFieldComponent.class, "Text Field");
+		componentNameAliases.put(NumberField.class, "Text Field");
 	}
 	
 	
@@ -61,7 +61,7 @@ public class ComponentPicker extends LabComponent {
 	public ComponentPicker(int width, int height) {
 		super(width, height);
 		
-		LabelComponent label = new LabelComponent(100000, 20, "Component Picker");
+		Label label = new Label(100000, 20, "Component Picker");
 		
 		addChild(label);
 		
@@ -78,7 +78,7 @@ public class ComponentPicker extends LabComponent {
 
 	private void createButtonFor(Class<? extends LabComponent> component) {
 		
-		ButtonComponent button = new ButtonComponent(100, 20, getName(component)) {
+		Button button = new Button(100, 20, getName(component)) {
 			@Override
 			public void doSomething() {
 				

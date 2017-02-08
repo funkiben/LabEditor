@@ -11,8 +11,8 @@ import java.util.Set;
 import lab.component.LabComponent;
 import lab.component.MeasurableComponent;
 import lab.component.swing.SwingComponent;
-import lab.component.swing.input.CheckBoxComponent;
-import lab.component.swing.input.NumberFieldComponent;
+import lab.component.swing.input.CheckBox;
+import lab.component.swing.input.NumberField;
 
 public class EditableFieldRegistry {
 
@@ -27,15 +27,15 @@ public class EditableFieldRegistry {
 			e.printStackTrace();
 		}
 		
-		registerField(LabComponent.class, "offsetX", "X", new NumberFieldComponent(100, 20, "####"));
-		registerField(LabComponent.class, "offsetY", "Y", new NumberFieldComponent(100, 20, "####"));
-		registerField(LabComponent.class, "zOrder", "Z", new NumberFieldComponent(100, 20, "####"));
-		registerField(LabComponent.class, "width", "Width", new NumberFieldComponent(100, 20, "####"));
-		registerField(LabComponent.class, "height", "Height", new NumberFieldComponent(100, 20, "####"));
-		registerField(LabComponent.class, "visible", "Visible", new CheckBoxComponent(30, 30, ""));
+		registerField(LabComponent.class, "offsetX", "X", new NumberField(100, 20, "####"));
+		registerField(LabComponent.class, "offsetY", "Y", new NumberField(100, 20, "####"));
+		registerField(LabComponent.class, "zOrder", "Z", new NumberField(100, 20, "####"));
+		registerField(LabComponent.class, "width", "Width", new NumberField(100, 20, "####"));
+		registerField(LabComponent.class, "height", "Height", new NumberField(100, 20, "####"));
+		registerField(LabComponent.class, "visible", "Visible", new CheckBox(30, 30, ""));
 		
-		registerField(MeasurableComponent.class, "value", "Value", new NumberFieldComponent(100, 20, "####"));
-		registerField(MeasurableComponent.class, "showValue", "Show Value", new CheckBoxComponent(30, 30, ""));
+		registerField(MeasurableComponent.class, "value", "Value", new NumberField(100, 20, "####"));
+		registerField(MeasurableComponent.class, "showValue", "Show Value", new CheckBox(30, 30, ""));
 		
 		
 		
