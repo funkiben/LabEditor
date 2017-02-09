@@ -37,7 +37,9 @@ public class EditableFieldRegistry {
 		registerField(MeasurableComponent.class, "value", "Value", new NumberField(100, 20, "####"));
 		registerField(MeasurableComponent.class, "showValue", "Show Value", new CheckBox(30, 30, ""));
 		
+		// TODO registerField(GraduatedComponent.class, "graduation", "Graduation", ???);
 		
+		// TODO registerField(BunsenBurner.class, "flame", "Flame", ???)
 		
 		
 	}

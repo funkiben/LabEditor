@@ -2,7 +2,7 @@
 
 2. Drag and drop component feature from Component Picker window to simulation editor window
 
-3. Component inspector window for editing LabComponent fields <- might need to be more than just accessing LabComponent fields (i.e. below task)
+3. Component inspector window for editing LabComponent fields <- might need to be more than just accessing LabComponent fields (i.e. task 4)
 
 3.5 Map out all editable fields with appropriate InputComponent
 
