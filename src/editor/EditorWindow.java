@@ -1,6 +1,7 @@
 package editor;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Point;
 
@@ -31,7 +32,8 @@ public class EditorWindow extends LabComponent {
 		this.name = name;
 		
 		dragBarDragArea = new ClickableArea(this);
-		
+		dragBarDragArea.setDragCursorIcon(Cursor.DEFAULT_CURSOR);
+		dragBarDragArea.setHoverCursorIcon(Cursor.DEFAULT_CURSOR);
 		
 		dragBar = new EmptyComponent(width, DRAG_BAR_HEIGHT);
 		dragBar.setOffsetY(-DRAG_BAR_HEIGHT);
