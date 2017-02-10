@@ -54,7 +54,9 @@ public class EditableFieldRegistry {
 		registerField(BunsenBurner.class, "flame", null);
 		registerField(Flame.class, "resolutionX", new NumberField(100, NUMBER_FIELD_HEIGHT, "###"));
 		registerField(Flame.class, "resolutionY", new NumberField(100, NUMBER_FIELD_HEIGHT, "###"));
-		
+		registerField(Flame.class, "intensity", "Amount", new NumberField(100, NUMBER_FIELD_HEIGHT, "###"));
+		registerField(Flame.class, "noiseFrequency", "Density", new NumberField(100, NUMBER_FIELD_HEIGHT, "##.#"));
+		registerField(Flame.class, "noiseIncrement", "Speed", new NumberField(100, NUMBER_FIELD_HEIGHT, "##"));
 		
 	}
 	
@@ -75,17 +77,29 @@ public class EditableFieldRegistry {
 	}
 	
 	public static void registerField(Class<?> clazz, String fieldName, SwingComponent input) {
-		char[] chars = fieldName.toCharArray();
+		registerField(clazz, fieldName, formatName(fieldName), input);
+	}
+	
+	private static String formatName(String name) {
+		char[] chars = name.toCharArray();
 		
 		chars[0] += 32;
 		
+		int[] spacePositions = new int[chars.length];
+		
 		for (int i = 1 ; i < chars.length - 1; i++) {
 			if (chars[i] >= 65 && chars[i] <= 90) {
-				chars[i + 1] += 32;
+				spacePositions[i + 1] = 1;
 			}
 		}
 		
-		registerField(clazz, fieldName, new String(chars), input);
+		String newName = new String(chars);
+		
+		for (int i : spacePositions) {
+			newName += newName.substring(0, i) + " " + newName.substring(i, newName.length());
+		}
+		
+		return newName;
 	}
 	
 	public static void registerField(Class<?> clazz, String fieldName, String aliasName, SwingComponent input) {
