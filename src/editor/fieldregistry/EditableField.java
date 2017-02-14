@@ -2,7 +2,6 @@ package editor.fieldregistry;
 
 import java.lang.reflect.Field;
 
-import lab.component.LabComponent;
 import lab.component.swing.SwingComponent;
 
 public class EditableField {
@@ -29,7 +28,7 @@ public class EditableField {
 		return name;
 	}
 	
-	public Object getValue(LabComponent c) {
+	public Object getValue(Object c) {
 		try {
 			return field.get(c);
 		} catch (IllegalArgumentException | IllegalAccessException e) {
@@ -39,7 +38,7 @@ public class EditableField {
 		return null;
 	}
 	
-	public void setValue(LabComponent c, Object value) {
+	public void setValue(Object c, Object value) {
 		try {
 			field.set(c, value);
 		} catch (IllegalArgumentException | IllegalAccessException e) {

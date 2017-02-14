@@ -8,16 +8,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import lab.component.BunsenBurner;
+import lab.component.GraduatedComponent;
+import lab.component.Graduation;
 import lab.component.LabComponent;
 import lab.component.MeasurableComponent;
+import lab.component.fx.Flame;
 import lab.component.swing.SwingComponent;
 import lab.component.swing.input.CheckBox;
 import lab.component.swing.input.NumberField;
 
 public class EditableFieldRegistry {
 
-	private static final Map<Class<? extends LabComponent>, List<EditableField>> registry = new HashMap<Class<? extends LabComponent>, List<EditableField>>();
+	private static final Map<Class<?>, List<EditableField>> registry = new HashMap<Class<?>, List<EditableField>>();
 	private static Field modifiersField;
+	
+	private static final int NUMBER_FIELD_HEIGHT = 20;
+	private static final int CHECKBOX_WIDTH = 30;
+	private static final int CHECKBOX_HEIGHT = 30;
 	
 	static {
 		try {
@@ -27,43 +35,74 @@ public class EditableFieldRegistry {
 			e.printStackTrace();
 		}
 		
-		registerField(LabComponent.class, "offsetX", "X", new NumberField(100, 20, "####"));
-		registerField(LabComponent.class, "offsetY", "Y", new NumberField(100, 20, "####"));
-		registerField(LabComponent.class, "zOrder", "Z", new NumberField(100, 20, "####"));
-		registerField(LabComponent.class, "width", "Width", new NumberField(100, 20, "####"));
-		registerField(LabComponent.class, "height", "Height", new NumberField(100, 20, "####"));
-		registerField(LabComponent.class, "visible", "Visible", new CheckBox(30, 30, ""));
+		registerField(LabComponent.class, "offsetX", "X", new NumberField(100, NUMBER_FIELD_HEIGHT, "####"));
+		registerField(LabComponent.class, "offsetY", "Y", new NumberField(100, NUMBER_FIELD_HEIGHT, "####"));
+		registerField(LabComponent.class, "zOrder", "Z", new NumberField(100, NUMBER_FIELD_HEIGHT, "####"));
+		registerField(LabComponent.class, "width", new NumberField(100, NUMBER_FIELD_HEIGHT, "####"));
+		registerField(LabComponent.class, "height", new NumberField(100, NUMBER_FIELD_HEIGHT, "####"));
+		registerField(LabComponent.class, "visible", new CheckBox(CHECKBOX_WIDTH, CHECKBOX_HEIGHT, ""));
 		
-		registerField(MeasurableComponent.class, "value", "Value", new NumberField(100, 20, "####"));
-		registerField(MeasurableComponent.class, "showValue", "Show Value", new CheckBox(30, 30, ""));
+		registerField(MeasurableComponent.class, "value", new NumberField(100, NUMBER_FIELD_HEIGHT, "####"));
+		registerField(MeasurableComponent.class, "showValue", "show value", new CheckBox(CHECKBOX_WIDTH, CHECKBOX_HEIGHT, ""));
 		
+		registerField(GraduatedComponent.class, "graduation", null);
+		registerField(Graduation.class, "start", new NumberField(100, NUMBER_FIELD_HEIGHT, "####"));
+		registerField(Graduation.class, "end", new NumberField(100, NUMBER_FIELD_HEIGHT, "####"));
+		registerField(Graduation.class, "lineIntervals", new NumberField(100, NUMBER_FIELD_HEIGHT, "###.##"));
+		registerField(Graduation.class, "subLineIntervals", new NumberField(100, NUMBER_FIELD_HEIGHT, "###.##"));
 		
-		
+		registerField(BunsenBurner.class, "flame", null);
+		registerField(Flame.class, "resolutionX", new NumberField(100, NUMBER_FIELD_HEIGHT, "###"));
+		registerField(Flame.class, "resolutionY", new NumberField(100, NUMBER_FIELD_HEIGHT, "###"));
+		registerField(Flame.class, "intensity", "Amount", new NumberField(100, NUMBER_FIELD_HEIGHT, "###"));
+		registerField(Flame.class, "noiseFrequency", "Density", new NumberField(100, NUMBER_FIELD_HEIGHT, "##.#"));
+		registerField(Flame.class, "noiseIncrement", "Speed", new NumberField(100, NUMBER_FIELD_HEIGHT, "##"));
 		
 	}
 	
-	@SuppressWarnings("unchecked")
-	public static List<EditableField> getEditableFields(Class<? extends LabComponent> c) {
+	public static List<EditableField> getEditableFields(Class<?> c) {
 		List<EditableField> editableFields = new ArrayList<EditableField>();
 		
 		editableFields.addAll(registry.get(c));
 		
 		if (c.getSuperclass() != Object.class) {
-			editableFields.addAll(getEditableFields((Class<? extends LabComponent>) c.getSuperclass()));
+			editableFields.addAll(getEditableFields((Class<?>) c.getSuperclass()));
 		}
 		
 		return editableFields;
 	}
 	
-	public static Set<Class<? extends LabComponent>> getEditableLabComponents() {
+	public static Set<Class<?>> getEditableLabComponents() {
 		return registry.keySet();
 	}
 	
-	public static void registerField(Class<? extends LabComponent> clazz, String fieldName, SwingComponent input) {
-		registerField(clazz, fieldName, fieldName, input);
+	public static void registerField(Class<?> clazz, String fieldName, SwingComponent input) {
+		registerField(clazz, fieldName, formatName(fieldName), input);
 	}
 	
-	public static void registerField(Class<? extends LabComponent> clazz, String fieldName, String aliasName, SwingComponent input) {
+	private static String formatName(String name) {
+		char[] chars = name.toCharArray();
+		
+		chars[0] += 32;
+		
+		int[] spacePositions = new int[chars.length];
+		
+		for (int i = 1 ; i < chars.length - 1; i++) {
+			if (chars[i] >= 65 && chars[i] <= 90) {
+				spacePositions[i + 1] = 1;
+			}
+		}
+		
+		String newName = new String(chars);
+		
+		for (int i : spacePositions) {
+			newName += newName.substring(0, i) + " " + newName.substring(i, newName.length());
+		}
+		
+		return newName;
+	}
+	
+	public static void registerField(Class<?> clazz, String fieldName, String aliasName, SwingComponent input) {
 		Field field = null;
 		
 		try {
@@ -89,7 +128,7 @@ public class EditableFieldRegistry {
 
 	}
 
-	private static Field findAndPrepareField(Class<? extends LabComponent> clazz, String fieldName) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+	private static Field findAndPrepareField(Class<?> clazz, String fieldName) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		Field field = clazz.getDeclaredField(fieldName);
 
 		field.setAccessible(true);
