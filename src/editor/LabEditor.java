@@ -12,13 +12,19 @@ public class LabEditor extends LabFrame {
 		
 		getRoot().setScaleChildren(false);
 		getRoot().setLayout(LabComponent.FREE_FORM);
-		
-		EditorWindow testWindow = new EditorWindow("Test Window", 220, 360);
-		testWindow.getContent().addChild(new ComponentPicker(220, 360));
-		testWindow.setOffsetY(20);
-		testWindow.setMinWidth(220);
-		testWindow.setMinHeight(360);
+		MenuBarComponent menuBar = new MenuBarComponent(1500,25);
+		menuBar.setOffsetY(0);
+		menuBar.setOffsetX(0);
+		EditorWindow testWindow = new EditorWindow("Test Window", 300, 500);
+		testWindow.getContent().addChild(new ComponentPicker(300, 500));
+		testWindow.setOffsetY(45);
+		testWindow.setMinWidth(300);
+		testWindow.setMinHeight(500);
+		//EditorWindow testWindow2 = new EditorWindow("Test Inspector", 300, 500);
+		//testWindow2.getContent().addChild(new );
+		addComponent(menuBar);
 		addComponent(testWindow);
+		//addComponent(testWindow2);
 		
 		start(30);
 		
