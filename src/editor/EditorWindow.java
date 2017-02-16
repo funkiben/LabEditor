@@ -17,7 +17,7 @@ public class EditorWindow extends LabComponent {
 
 	private static final int DRAG_BAR_HEIGHT = 20;
 	private static final int RESIZE_DRAG_AREA_SIZE = 5;
-
+	
 	private String name;
 	private final LabComponent content;
 	private final LabComponent dragBar;
@@ -27,7 +27,7 @@ public class EditorWindow extends LabComponent {
 
 	public EditorWindow(String name, int width, int height) {
 		super(width, height);
-
+		
 		this.name = name;
 
 		dragBarDragArea = new ClickableArea(this);
@@ -96,6 +96,8 @@ public class EditorWindow extends LabComponent {
 
 	@Override
 	public void draw(int x, int y, int width, int height, Graphics g) {
+		g.setColor(Color.white);
+		g.fillRect(x, y, width, height);
 		g.setColor(Color.black);
 		g.fillRect(x, y - DRAG_BAR_HEIGHT, width, DRAG_BAR_HEIGHT);
 
@@ -111,6 +113,8 @@ public class EditorWindow extends LabComponent {
 
 		if (dragBarDragArea.hasClick()) {
 
+			this.setZOrder(10);
+			
 			Point newOffset = new Point();
 			newOffset.x = dragBarDragArea.getMousePosition().x + dragBarDragArea.getClickRelativeToPosition().x;
 			newOffset.y = dragBarDragArea.getMousePosition().y + dragBarDragArea.getClickRelativeToPosition().y
