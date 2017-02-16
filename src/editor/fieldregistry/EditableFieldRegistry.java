@@ -16,13 +16,17 @@ import lab.component.Graduation;
 import lab.component.LabComponent;
 import lab.component.MeasurableComponent;
 import lab.component.Piston;
+import lab.component.container.Container;
+import lab.component.container.ContentState;
 import lab.component.fx.Flame;
+import lab.component.sensor.Manometer;
 import lab.component.swing.SwingComponent;
 import lab.component.swing.input.CheckBox;
 import lab.component.swing.input.DoubleField;
 import lab.component.swing.input.IntegerField;
 import lab.component.swing.input.IntegerSlider;
 import lab.component.swing.input.DoubleSlider;
+import lab.component.swing.input.DropdownMenu;
 
 public class EditableFieldRegistry {
 
@@ -59,7 +63,15 @@ public class EditableFieldRegistry {
 		registerField("getLineIntervals", "setLineIntervals", "Tick Intervals", doubleField(3, 5));
 		registerField("getSubLineIntervals", "setSubLineIntervals", "Subtick Intervals", doubleField(3, 5));
 		
-		registerField(Piston.class, "getGasColor", "setGasColor", "Gas Color", new ChangeColorButton(150, 50, "Change Gas Color"));
+		currentClass = Manometer.class;
+		registerField("getValue", "setValue", "Pressure Reading", doubleField(0, Double.MAX_VALUE, 5, 5));
+		registerField("getGraduation", "setGraduation", "Graduation", null);
+		
+		currentClass = Container.class;
+		registerField("getColor", "setColor", "Content Color", changeColorButton("Change Content Color"));
+		registerField("getContentState", "setContentState", "Content State", dropdownMenu(ContentState.GAS, ContentState.LIQUID, ContentState.SOLID));
+		
+		registerField(Piston.class, "getGasColor", "setGasColor", "Gas Color", changeColorButton("Change Gas Color"));
 		
 		registerField(BunsenBurner.class, "getFlame", "setFlame", "Flame", null);
 		
@@ -70,6 +82,7 @@ public class EditableFieldRegistry {
 		registerField("getNoiseFrequency", "setNoiseFrequency", "Density", doubleSlider(0, 100, 1));
 		registerField("getNoiseIncrement", "setNoiseIncrement", "Speed", doubleSlider(0, 100, 1));
 		registerField("getSeed", "setSeed", "Seed", integerField());
+		
 		
 		
 		/*
@@ -129,6 +142,15 @@ public class EditableFieldRegistry {
 	
 	private static CheckBox checkBox() {
 		return new CheckBox(30, 30, "");
+	}
+	
+	private static ChangeColorButton changeColorButton(String name) {
+		return new ChangeColorButton(150, 50, name);
+	}
+	
+	@SafeVarargs
+	private static <E> DropdownMenu<E> dropdownMenu(E...args) {
+		return new DropdownMenu<E>(200, 40, args);
 	}
 	
 	private static void registerField(String getter, String setter, String name, SwingComponent input) {
