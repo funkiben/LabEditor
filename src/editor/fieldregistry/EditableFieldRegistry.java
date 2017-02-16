@@ -21,14 +21,13 @@ import lab.component.swing.SwingComponent;
 import lab.component.swing.input.CheckBox;
 import lab.component.swing.input.DoubleField;
 import lab.component.swing.input.IntegerField;
+import lab.component.swing.input.IntegerSlider;
+import lab.component.swing.input.DoubleSlider;
 
 public class EditableFieldRegistry {
 
 	private static final Map<Class<?>, List<EditableField>> registry = new HashMap<Class<?>, List<EditableField>>();
 	private static Field modifiersField;
-	
-	private static final int CHECKBOX_WIDTH = 30;
-	private static final int CHECKBOX_HEIGHT = 30;
 	
 	private static Class<?> currentClass = null;
 	
@@ -55,10 +54,10 @@ public class EditableFieldRegistry {
 		registerField(GraduatedComponent.class, "getGraduation", "setGraduation", "Graduation", null);
 		
 		currentClass = Graduation.class;
-		registerField("getStart", "setStart", "Start", doubleField(Double.MIN_VALUE, Double.MAX_VALUE, 5, 5));
-		registerField("getEnd", "setEnd", "End", doubleField(Double.MIN_VALUE, Double.MAX_VALUE, 5, 5));
-		registerField("getLineIntervals", "setLineIntervals", "Tick Intervals", doubleField(Double.MIN_VALUE, Double.MAX_VALUE, 5, 5));
-		registerField("getSubLineIntervals", "setSubLineIntervals", "Subtick Intervals", doubleField(Double.MIN_VALUE, Double.MAX_VALUE, 5, 5));
+		registerField("getStart", "setStart", "Start", doubleField(5, 5));
+		registerField("getEnd", "setEnd", "End", doubleField(5, 5));
+		registerField("getLineIntervals", "setLineIntervals", "Tick Intervals", doubleField(3, 5));
+		registerField("getSubLineIntervals", "setSubLineIntervals", "Subtick Intervals", doubleField(3, 5));
 		
 		registerField(Piston.class, "getGasColor", "setGasColor", "Gas Color", new ChangeColorButton(150, 50, "Change Gas Color"));
 		
@@ -67,9 +66,13 @@ public class EditableFieldRegistry {
 		currentClass = Flame.class;
 		registerField("getResolutionX", "setResolutionX", "X Resolution", integerField(1, 200));
 		registerField("getResolutionY", "setResolutionY", "Y Resolution", integerField(1, 200));
+		registerField("getIntensity", "setIntensity", "Intensity", integerSlider(1, 125));
+		registerField("getNoiseFrequency", "setNoiseFrequency", "Density", doubleSlider(0, 100, 1));
+		registerField("getNoiseIncrement", "setNoiseIncrement", "Speed", doubleSlider(0, 100, 1));
+		registerField("getSeed", "setSeed", "Seed", integerField());
+		
 		
 		/*
-		
 		registerField(GraduatedComponent.class, "graduation", null);
 		registerField(Graduation.class, "start", new NumberField(100, NUMBER_FIELD_HEIGHT, "####"));
 		registerField(Graduation.class, "end", new NumberField(100, NUMBER_FIELD_HEIGHT, "####"));
@@ -100,12 +103,32 @@ public class EditableFieldRegistry {
 		return new DoubleField(50, min, max, sigfigs);
 	}
 	
+	private static DoubleField doubleField(int sigfigs) {
+		return doubleField(Double.MIN_VALUE, Double.MAX_VALUE, sigfigs);
+	}
+	
+	private static DoubleField doubleField(int sigfigs, int scientificNotationMinPower) {
+		return doubleField(Double.MIN_VALUE, Double.MAX_VALUE, sigfigs, scientificNotationMinPower);
+	}
+	
 	private static IntegerField integerField(int min, int max) {
 		return new IntegerField(50, min, max);
 	}
 	
+	private static IntegerField integerField() {
+		return integerField(Integer.MIN_VALUE, Integer.MAX_VALUE);
+	}
+	
+	private static DoubleSlider doubleSlider(double min, double max, double increment) {
+		return new DoubleSlider(150, 30, min, max, increment, DoubleSlider.HORIZONTAL);
+	}
+	
+	private static IntegerSlider integerSlider(int min, int max) {
+		return new IntegerSlider(150, 30, min, max, DoubleSlider.HORIZONTAL);
+	}
+	
 	private static CheckBox checkBox() {
-		return new CheckBox(CHECKBOX_WIDTH, CHECKBOX_HEIGHT, "");
+		return new CheckBox(30, 30, "");
 	}
 	
 	private static void registerField(String getter, String setter, String name, SwingComponent input) {

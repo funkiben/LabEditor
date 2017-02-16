@@ -21,7 +21,7 @@ import lab.component.swing.Label;
 import lab.component.swing.input.Button;
 import lab.component.swing.input.DropdownMenu;
 import lab.component.swing.input.DoubleField;
-import lab.component.swing.input.Slider;
+import lab.component.swing.input.DoubleSlider;
 import lab.component.swing.input.Switch;
 
 public class ComponentPicker extends LabComponent {
@@ -29,7 +29,7 @@ public class ComponentPicker extends LabComponent {
 	@SuppressWarnings("unchecked")
 	private static final Class<? extends LabComponent>[] components = new Class[] { BunsenBurner.class, Piston.class,
 			Beaker.class, Bulb.class, Flask.class, GraduatedCylinder.class, ParticleSystem.class, Manometer.class,
-			Thermometer.class, Flame.class, Graph.class, Button.class, DropdownMenu.class, Label.class, Slider.class,
+			Thermometer.class, Flame.class, Graph.class, Button.class, DropdownMenu.class, Label.class, DoubleSlider.class,
 			Switch.class, DoubleField.class };
 
 	private static final Map<Class<? extends LabComponent>, String> componentNameAliases = new HashMap<Class<? extends LabComponent>, String>();
