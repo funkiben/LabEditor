@@ -6,7 +6,8 @@ import lab.component.LabComponent;
 public class LabEditor extends LabFrame {
 
 	private static final long serialVersionUID = 1L;
-	private EditorWindow testWindow;
+	private EditorWindow componentWindow;
+	private EditorWindow labWindow;
 	private MenuBarComponent menuBar;
 	
 	public LabEditor() {
@@ -14,21 +15,38 @@ public class LabEditor extends LabFrame {
 
 		getRoot().setScaleChildren(false);
 		getRoot().setLayout(LabComponent.FREE_FORM);
-		testWindow = new EditorWindow("Test Window", 300, 500);
-		testWindow.getContent().addChild(new ComponentPicker(300, 500));
-		testWindow.setOffsetY(45);
-		testWindow.setMinWidth(300);
-		testWindow.setMinHeight(500);
-		menuBar = new MenuBarComponent(1500, 25) {
+		componentWindow = new EditorWindow("Component Picker", 300, 500);
+		componentWindow.getContent().addChild(new ComponentPicker(300, 500));
+		componentWindow.setOffsetY(45);
+		componentWindow.setMinWidth(300);
+		componentWindow.setMinHeight(500);
+		
+		labWindow = new EditorWindow("Lab Options", 300, 500);
+		labWindow.getContent().addChild(new LabOptions(300,500));
+		labWindow.setOffsetY(45);
+		labWindow.setMinWidth(300);
+		labWindow.setMinHeight(500);
+		menuBar = new MenuBarComponent(1920, 25) {
 			@Override
 			public void componentPickerMethod() {
-				if(testWindow.isVisible()) {
-					testWindow.setVisible(false);
+				if(componentWindow.isVisible()) {
+					componentWindow.setVisible(false);
 					this.getComponentPicker().setSelected(false);
 					
 				} else {
-					testWindow.setVisible(true);
+					componentWindow.setVisible(true);
 					this.getComponentPicker().setSelected(true);
+				}
+			}
+			
+			@Override
+			public void labOptionsMethod() {
+				if(labWindow.isVisible()) {
+					labWindow.setVisible(false);
+					this.getLabOptions().setSelected(false);
+				} else {
+					labWindow.setVisible(true);
+					this.getLabOptions().setSelected(true);
 				}
 			}
 		};
@@ -36,18 +54,25 @@ public class LabEditor extends LabFrame {
 		menuBar.setOffsetX(0);
 		
 		addComponent(menuBar);
-		addComponent(testWindow);
+		addComponent(componentWindow);
+		addComponent(labWindow);
+		labWindow.setVisible(false);
 
-		start(30);
+		start(60);
 
 	}
 
 	@Override
 	public void update() {
-		if(testWindow.isVisible()) {
+		if(componentWindow.isVisible()) {
 			menuBar.getComponentPicker().setSelected(true);
 		} else {
 			menuBar.getComponentPicker().setSelected(false);
+		}
+		if(labWindow.isVisible()) {
+			menuBar.getLabOptions().setSelected(true);
+		} else {
+			menuBar.getLabOptions().setSelected(false);
 		}
 		
 	}

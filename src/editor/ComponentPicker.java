@@ -1,6 +1,7 @@
 package editor;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,7 +46,7 @@ public class ComponentPicker extends LabComponent {
 		super(width, height);
 
 		Label header = new Label(100000, 20, "Pick Components: ");
-
+		header.setFont(new Font("default",Font.BOLD,18));
 		Label inputHeader = new Label(100000, 20, "User Input");
 		DropdownMenu inputMenu = new DropdownMenu(150, 30, "Button", "Checkbox", "Dropdown Menu", "Slider",
 				"Slider (labeled)", "Text Box", "Text Box (numbers only)", "Switch");
