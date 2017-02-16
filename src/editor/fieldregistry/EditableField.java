@@ -1,23 +1,23 @@
 package editor.fieldregistry;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import lab.component.swing.SwingComponent;
 
 public class EditableField {
 
-	private final Field field;
 	private final String name;
+	private final Method getter;
+	private final Method setter;
 	private final SwingComponent input;
 	
-	public EditableField(Field field, String name, SwingComponent input) {
-		this.field = field;
+	public EditableField(String name, Method getter, Method setter, SwingComponent input) {
 		this.name = name;
+		this.getter = getter;
+		this.setter = setter;
 		this.input = input;
-	}
-	
-	public EditableField(Field field, SwingComponent input) {
-		this(field, field.getName(), input);
 	}
 	
 	public SwingComponent getInputComponent() {
@@ -30,8 +30,8 @@ public class EditableField {
 	
 	public Object getValue(Object c) {
 		try {
-			return field.get(c);
-		} catch (IllegalArgumentException | IllegalAccessException e) {
+			return getter.invoke(c);
+		} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
 			e.printStackTrace();
 		}
 		
@@ -40,8 +40,8 @@ public class EditableField {
 	
 	public void setValue(Object c, Object value) {
 		try {
-			field.set(c, value);
-		} catch (IllegalArgumentException | IllegalAccessException e) {
+			setter.invoke(c, value);
+		} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
 			e.printStackTrace();
 		}
 	}
