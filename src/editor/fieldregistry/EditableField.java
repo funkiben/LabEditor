@@ -46,4 +46,30 @@ public class EditableField {
 		}
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((getter == null) ? 0 : getter.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof EditableField))
+			return false;
+		EditableField other = (EditableField) obj;
+		if (getter == null) {
+			if (other.getter != null)
+				return false;
+		} else if (!getter.equals(other.getter))
+			return false;
+		return true;
+	}
+	
+	
 }
