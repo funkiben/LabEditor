@@ -18,7 +18,7 @@ import lab.component.Piston;
 import lab.component.container.Container;
 import lab.component.container.ContentState;
 import lab.component.fx.Flame;
-import lab.component.sensor.Manometer;
+import lab.component.sensor.Manometer; 
 import lab.component.swing.input.CheckBox;
 import lab.component.swing.input.DoubleField;
 import lab.component.swing.input.IntegerField;
@@ -71,8 +71,8 @@ public class EditableFieldRegistry {
 		registerField("getResolutionX", "setResolutionX", "X Resolution", integerField(1, 200));
 		registerField("getResolutionY", "setResolutionY", "Y Resolution", integerField(1, 200));
 		registerField("getIntensity", "setIntensity", "Intensity", integerSlider(1, 200));
-		registerField("getNoiseFrequency", "setNoiseFrequency", "Density", doubleSlider(0, 100, 1));
-		registerField("getNoiseIncrement", "setNoiseIncrement", "Speed", doubleSlider(0, 100, 1));
+		registerField("getNoiseFrequency", "setNoiseFrequency", "Density", doubleSlider(0.1, 25, 0.1));
+		registerField("getNoiseIncrement", "setNoiseIncrement", "Speed", doubleSlider(0, 50, 1));
 		registerField("getSeed", "setSeed", "Seed", integerField());
 		
 		
@@ -177,9 +177,6 @@ public class EditableFieldRegistry {
 		}
 		
 		editableFields.addAll(registry.get(c));
-		
-		System.out.println(c.getSimpleName());
-		System.out.println(registry.get(c).toString());
 		
 		return editableFields;
 	}

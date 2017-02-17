@@ -49,6 +49,7 @@ public class LabEditor extends LabFrame {
 		*/
 		
 		testWindow = new EditorWindow("TestWindow", 300, 500);
+		testWindow.getContent().setScaleChildren(false);
 		
 		ComponentInspector inspector = new ComponentInspector(300, 500);
 		
@@ -60,7 +61,6 @@ public class LabEditor extends LabFrame {
 		LabComponent target = new BunsenBurner(30, 350);
 		
 		inspector.setTarget(target);
-		
 		
 		addComponent(testWindow);
 		addComponent(target);
