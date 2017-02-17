@@ -52,7 +52,7 @@ public class ComponentInspector extends LabComponent {
 		int height = 0;
 		
 		for (EditableField field : fields) {
-			if (field.getInputComponent() == null) {
+			if (field.getInputComponentInstantiator() == null) {
 				
 				MinimizableComponent c = new MinimizableComponent(field.getName(), 350, 350, 17);
 				c.setOffsetY(5);
@@ -69,12 +69,7 @@ public class ComponentInspector extends LabComponent {
 				continue;
 			}
 			
-			try {
-				input = (InputComponent) field.getInputComponent().clone();
-			} catch (CloneNotSupportedException e) {
-				e.printStackTrace();
-				return;
-			}
+			input = field.getInputComponentInstantiator().create();
 			
 			input.setValue(field.getValue(target));
 			

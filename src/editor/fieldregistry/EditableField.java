@@ -3,24 +3,22 @@ package editor.fieldregistry;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import lab.component.swing.input.InputComponent;
-
 public class EditableField {
 
 	private final String name;
 	private final Method getter;
 	private final Method setter;
-	private final InputComponent input;
+	private final InputComponentInstantiater inputComponentInstantiator;
 	
-	public EditableField(String name, Method getter, Method setter, InputComponent input) {
+	public EditableField(String name, Method getter, Method setter, InputComponentInstantiater inputComponentInstantiator) {
 		this.name = name;
 		this.getter = getter;
 		this.setter = setter;
-		this.input = input;
+		this.inputComponentInstantiator = inputComponentInstantiator;
 	}
 	
-	public InputComponent getInputComponent() {
-		return input;
+	public InputComponentInstantiater getInputComponentInstantiator() {
+		return inputComponentInstantiator;
 	}
 	
 	public String getName() {
