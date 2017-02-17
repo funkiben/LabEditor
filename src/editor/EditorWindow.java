@@ -63,6 +63,8 @@ public class EditorWindow extends LabComponent {
 		resizing.enableNDrag(false);
 		resizing.enableNEDrag(false);
 		resizing.enableNWDrag(false);
+		
+		setZOrder(100);
 
 	}
 

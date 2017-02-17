@@ -1,26 +1,25 @@
 package editor.fieldregistry;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import lab.component.swing.SwingComponent;
+import lab.component.swing.input.InputComponent;
 
 public class EditableField {
 
 	private final String name;
 	private final Method getter;
 	private final Method setter;
-	private final SwingComponent input;
+	private final InputComponent input;
 	
-	public EditableField(String name, Method getter, Method setter, SwingComponent input) {
+	public EditableField(String name, Method getter, Method setter, InputComponent input) {
 		this.name = name;
 		this.getter = getter;
 		this.setter = setter;
 		this.input = input;
 	}
 	
-	public SwingComponent getInputComponent() {
+	public InputComponent getInputComponent() {
 		return input;
 	}
 	
@@ -45,7 +44,7 @@ public class EditableField {
 			e.printStackTrace();
 		}
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
