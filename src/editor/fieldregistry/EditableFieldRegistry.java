@@ -8,26 +8,21 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Predicate;
 
-import editor.input.ChangeColorButton;
 import lab.component.BunsenBurner;
 import lab.component.GraduatedComponent;
 import lab.component.Graduation;
 import lab.component.LabComponent;
 import lab.component.MeasurableComponent;
 import lab.component.Piston;
+import lab.component.container.Bulb;
 import lab.component.container.Container;
 import lab.component.container.ContentState;
 import lab.component.fx.Flame;
 import lab.component.sensor.Manometer;
-import lab.component.swing.input.CheckBox;
-import lab.component.swing.input.DoubleField;
-import lab.component.swing.input.IntegerField;
-import lab.component.swing.input.IntegerSlider;
-import lab.component.swing.input.DoubleSlider;
-import lab.component.swing.input.DropdownMenu;
-import lab.component.swing.input.InputComponent;
+import lab.component.sensor.Thermometer;
+
+import static editor.fieldregistry.InputComponentInstantiater.*;
 
 public class EditableFieldRegistry {
 
@@ -35,8 +30,6 @@ public class EditableFieldRegistry {
 	private static final Map<Class<?>, List<String>> hiddenFields = new HashMap<Class<?>, List<String>>();
 	
 	private static Class<?> currentClass = null;
-
-	private static final int NUMBER_FIELD_WIDTH = 60;
 	
 	static {
 
@@ -50,25 +43,23 @@ public class EditableFieldRegistry {
 		
 		registerField(MeasurableComponent.class, "getValue", "setValue", "Value", doubleField(0, 9999, 4, 5));
 		
-		registerField(GraduatedComponent.class, "getGraduation", "setGraduation", "Graduation", null);
+		registerField(GraduatedComponent.class, "getGraduation", "Graduation");
 		
-		currentClass = Manometer.class;
-		registerField("getValue", "setValue", "Pressure Reading", doubleField(0, Double.MAX_VALUE, 5, 5));
-		registerField("getGraduation", "setGraduation", "Graduation", null);
-
+		registerField(Manometer.class, "getValue", "setValue", "Pressure", doubleField(0, 9999999, 5, 5));
+		
 		currentClass = Container.class;
-		registerField("getContentColor", "setContentColor", "Content Color", changeColorButton("Change Content Color"));
+		registerField("getContentColor", "setContentColor", "Content Color", changeColorButton("Change Color"));
 		registerField("getContentState", "setContentState", "Content State", dropdownMenu(ContentState.GAS, ContentState.LIQUID, ContentState.SOLID));
 
 		currentClass = Graduation.class;
 		registerField("getStart", "setStart", "Start", doubleField(5, 5));
 		registerField("getEnd", "setEnd", "End", doubleField(5, 5));
-		registerField("getLineIntervals", "setLineIntervals", "Tick Intervals", doubleField(3, 5));
-		registerField("getSubLineIntervals", "setSubLineIntervals", "Subtick Intervals", doubleField(3, 5));
+		registerField("getLineIntervals", "setLineIntervals", "Tick Intervals", doubleField(0, 999999, 3, 5));
+		registerField("getSubLineIntervals", "setSubLineIntervals", "Subtick Intervals", doubleField(0, 999999, 3, 5));
 		
-		registerField(Piston.class, "getGasColor", "setGasColor", "Gas Color", changeColorButton("Change Gas Color"));
+		registerField(Piston.class, "getGasColor", "setGasColor", "Gas Color", changeColorButton("Change Color"));
 
-		registerField(BunsenBurner.class, "getFlame", null, "Flame", null);
+		registerField(BunsenBurner.class, "getFlame", "Flame");
 
 		currentClass = Flame.class;
 		registerField("getResolutionX", "setResolutionX", "X Resolution", integerField(1, 200));
@@ -76,103 +67,14 @@ public class EditableFieldRegistry {
 		registerField("getIntensity", "setIntensity", "Intensity", integerSlider(1, 200));
 		registerField("getNoiseFrequency", "setNoiseFrequency", "Density", doubleSlider(0.1, 25, 0.1));
 		registerField("getNoiseIncrement", "setNoiseIncrement", "Speed", doubleSlider(0, 50, 1));
-		registerField("getSeed", "setSeed", "Seed", integerField(0, Integer.MAX_VALUE));
+		registerField("getSeed", "setSeed", "Seed", integerField(0, 9999999));
 		hideField("X", "Y", "Z", "Width", "Height");
+		
+		hideField(Bulb.class, "Graduation");
+		hideField(Thermometer.class, "Width");
 
 	}
 
-	private static InputComponentInstantiater doubleField(double min, double max, int sigfigs, int scientificNotationMinPower) {
-		return new InputComponentInstantiater() {
-			@Override
-			public InputComponent create() {
-				return new DoubleField(NUMBER_FIELD_WIDTH, min, max, sigfigs, scientificNotationMinPower);
-			}
-		};
-	}
-
-	private static InputComponentInstantiater doubleField(double min, double max, int sigfigs) {
-		return new InputComponentInstantiater() {
-			@Override
-			public InputComponent create() {
-				return new DoubleField(NUMBER_FIELD_WIDTH, min, max, sigfigs);
-			}
-		};
-	}
-
-	private static InputComponentInstantiater doubleField(int sigfigs, int scientificNotationMinPower) {
-		return new InputComponentInstantiater() {
-			@Override
-			public InputComponent create() {
-				return new DoubleField(NUMBER_FIELD_WIDTH, -Double.MAX_VALUE, Double.MAX_VALUE, sigfigs, scientificNotationMinPower);
-			}
-		};
-	}
-
-	private static InputComponentInstantiater integerField(int min, int max) {
-		return new InputComponentInstantiater() {
-			@Override
-			public InputComponent create() {
-
-				return new IntegerField(NUMBER_FIELD_WIDTH, min, max);
-			}
-		};
-	}
-
-	private static InputComponentInstantiater integerField() {
-		return new InputComponentInstantiater() {
-			@Override
-			public InputComponent create() {
-				return new IntegerField(NUMBER_FIELD_WIDTH, Integer.MIN_VALUE, Integer.MAX_VALUE);
-			}
-		};
-	}
-
-	private static InputComponentInstantiater doubleSlider(double min, double max, double increment) {
-		return new InputComponentInstantiater() {
-			@Override
-			public InputComponent create() {
-				return new DoubleSlider(150, 25, min, max, increment, DoubleSlider.HORIZONTAL);
-			}
-		};
-	}
-
-	private static InputComponentInstantiater integerSlider(int min, int max) {
-		return new InputComponentInstantiater() {
-			@Override
-			public InputComponent create() {
-				return new IntegerSlider(150, 25, min, max, DoubleSlider.HORIZONTAL);
-			}
-		};
-	}
-
-	private static InputComponentInstantiater checkBox() {
-		return new InputComponentInstantiater() {
-			@Override
-			public InputComponent create() {
-				return new CheckBox(25, 20, "");
-			}
-		};
-	}
-
-	private static InputComponentInstantiater changeColorButton(String name) {
-		return new InputComponentInstantiater() {
-			@Override
-			public InputComponent create() {
-				return new ChangeColorButton(150, 25, name);
-			}
-		};
-	}
-
-	@SafeVarargs
-	private static <E> InputComponentInstantiater dropdownMenu(E... args) {
-		return new InputComponentInstantiater() {
-			@Override
-			public InputComponent create() {
-				return new DropdownMenu<E>(100, 25, args);
-			}
-		};
-	}
-	
 	private static void hideField(String... names) {
 		hideField(currentClass, names);
 	}
@@ -191,23 +93,31 @@ public class EditableFieldRegistry {
 		hiddenFields.put(clazz, list);
 	}
 
-	private static void registerField(String getter, String setter, String name,
-			InputComponentInstantiater inputComponentInstantiator) {
+	private static void registerField(String getter, String setter, String name, InputComponentInstantiater inputComponentInstantiator) {
 		registerField(currentClass, getter, setter, name, inputComponentInstantiator);
 	}
 
-	private static void registerField(Class<?> clazz, String getter, String setter, String name,
-			InputComponentInstantiater inputComponentInstantiator) {
+	private static void registerField(String getter, String name) {
+		registerField(currentClass, getter, name);
+	}
+	
+	private static void registerField(Class<?> clazz, String getter, String name) {
+		registerField(clazz, getter, null, name, null);
+	}
+	
+	private static void registerField(Class<?> clazz, String getter, String setter, String name, InputComponentInstantiater inputComponentInstantiator) {
 		Method getterMethod, setterMethod = null;
 
 		try {
 			getterMethod = clazz.getMethod(getter);
-
-			for (Method method : clazz.getMethods()) {
-				if (method.getName().equals(setter)) {
-					setterMethod = method;
-					setterMethod.setAccessible(true);
-					break;
+			
+			if (setter != null) {
+				for (Method method : clazz.getDeclaredMethods()) {
+					if (method.getName().equals(setter)) {
+						setterMethod = method;
+						setterMethod.setAccessible(true);
+						break;
+					}
 				}
 			}
 

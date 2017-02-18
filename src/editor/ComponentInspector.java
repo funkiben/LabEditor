@@ -8,7 +8,7 @@ import java.util.Set;
 
 import editor.fieldregistry.EditableField;
 import editor.fieldregistry.EditableFieldRegistry;
-import editor.fieldregistry.InputWatcher;
+import editor.fieldregistry.FieldInputSyncer;
 import lab.component.EmptyComponent;
 import lab.component.LabComponent;
 import lab.component.geo.Rectangle;
@@ -18,7 +18,7 @@ import lab.component.swing.input.InputComponent;
 public class ComponentInspector extends LabComponent {
 
 	private LabComponent target = null;
-	private final List<InputWatcher> inputWatchers = new ArrayList<InputWatcher>();
+	private final List<FieldInputSyncer> fieldInputSyncers = new ArrayList<FieldInputSyncer>();
 	
 	public ComponentInspector() {
 		super(250, 500);
@@ -37,7 +37,7 @@ public class ComponentInspector extends LabComponent {
 			this.removeChild(c);
 		}
 		
-		inputWatchers.clear();
+		fieldInputSyncers.clear();
 		
 		addEditableFieldInputs(target, this);
 	}
@@ -50,13 +50,12 @@ public class ComponentInspector extends LabComponent {
 		
 		InputComponent input;
 		
-		int height = 0;
+		int height = container instanceof MinimizableComponent ? 17 : 0;
 		
 		for (EditableField field : fields) {
 			if (field.getInputComponentInstantiator() == null) {
 				
-				MinimizableComponent c = new MinimizableComponent(field.getName(), container.getWidth(), 350);
-				c.setMinimized(false);
+				MinimizableComponent c = new MinimizableComponent(field.getName(), container.getWidth(), container.getHeight());
 				container.addChild(c);
 				
 				addEditableFieldInputs(field.getValue(target), c);
@@ -70,14 +69,7 @@ public class ComponentInspector extends LabComponent {
 			
 			input.setValue(field.getValue(target));
 			
-			inputWatchers.add(new InputWatcher(input) {
-				
-				@Override
-				public void onChangeDetected(Object previousValue, Object newValue) {
-					field.setValue(target, newValue);
-				}
-				
-			});
+			fieldInputSyncers.add(new FieldInputSyncer(target, input, field));
 			
 			label = new Label(100, 20, field.getName());
 			label.setWidth(label.getTextWidth());
@@ -94,22 +86,25 @@ public class ComponentInspector extends LabComponent {
 			container.addChild(rect);
 			
 			
-			height += 20;
+			height += 1 + Math.max(input.getHeight(), label.getHeight());
 			
 		}
 		
-		Rectangle rect = new Rectangle(getWidth(), 3);
-		rect.setFillColor(Color.lightGray);
-		rect.setStroke(false);
-		container.addChild(rect);
+		if (container instanceof MinimizableComponent) {
+			Rectangle rect = new Rectangle(getWidth(), 3);
+			rect.setFillColor(new Color(230, 230, 230));
+			rect.setStroke(false);
+			container.addChild(rect);
+			height += 3;
+		}
 		
-		
+		container.setHeight(height);
 	}
 	
 	@Override
 	public void update() {
-		for (InputWatcher watcher : inputWatchers) {
-			watcher.check();
+		for (FieldInputSyncer syncer : fieldInputSyncers) {
+			syncer.sync(true);
 		}
 	}
 
