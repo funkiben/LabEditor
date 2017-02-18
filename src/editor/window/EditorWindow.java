@@ -1,4 +1,4 @@
-package editor;
+package editor.window;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -10,7 +10,6 @@ import javax.swing.JPanel;
 import lab.component.ClickableArea;
 import lab.component.EmptyComponent;
 import lab.component.LabComponent;
-import lab.component.UserComponentResizing;
 import lab.component.swing.input.Button;
 
 public class EditorWindow extends LabComponent {
@@ -23,6 +22,7 @@ public class EditorWindow extends LabComponent {
 	private final LabComponent dragBar;
 	private final Button closeButton;
 	private ClickableArea dragBarDragArea;
+	private boolean resizable = true;
 	private final UserComponentResizing resizing = new UserComponentResizing(this, 20, 20);
 
 	public EditorWindow(String name, int width, int height) {
@@ -95,6 +95,14 @@ public class EditorWindow extends LabComponent {
 	public void setMinHeight(int minHeight) {
 		resizing.setMinHeight(minHeight);
 	}
+	
+	public void setResizable(boolean resizable) {
+		this.resizable = resizable;
+	}
+	
+	public boolean isResizable() {
+		return resizable;
+	}
 
 	@Override
 	public void draw(int x, int y, int width, int height, Graphics g) {
@@ -140,7 +148,10 @@ public class EditorWindow extends LabComponent {
 
 		}
 
-		resizing.check(x, y, width, height);
+		if (resizable) {
+			resizing.check(x, y, width, height);
+		}
+		
 	}
 
 	@Override

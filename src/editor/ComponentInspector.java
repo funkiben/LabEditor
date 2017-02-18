@@ -1,5 +1,6 @@
 package editor;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,7 @@ import editor.fieldregistry.EditableFieldRegistry;
 import editor.fieldregistry.InputWatcher;
 import lab.component.EmptyComponent;
 import lab.component.LabComponent;
-import lab.component.MinimizableComponent;
+import lab.component.geo.Rectangle;
 import lab.component.swing.Label;
 import lab.component.swing.input.InputComponent;
 
@@ -19,8 +20,8 @@ public class ComponentInspector extends LabComponent {
 	private LabComponent target = null;
 	private final List<InputWatcher> inputWatchers = new ArrayList<InputWatcher>();
 	
-	public ComponentInspector(int width, int height) {
-		super(width, height);
+	public ComponentInspector() {
+		super(250, 500);
 		
 		setScaleChildren(false);
 	}
@@ -38,10 +39,10 @@ public class ComponentInspector extends LabComponent {
 		
 		inputWatchers.clear();
 		
-		addEditableFieldInputs(target, this, 0);
+		addEditableFieldInputs(target, this);
 	}
 	
-	private void addEditableFieldInputs(final Object target, LabComponent container, int offsetX) {
+	private void addEditableFieldInputs(final Object target, LabComponent container) {
 		
 		Label label;
 		
@@ -54,15 +55,11 @@ public class ComponentInspector extends LabComponent {
 		for (EditableField field : fields) {
 			if (field.getInputComponentInstantiator() == null) {
 				
-				MinimizableComponent c = new MinimizableComponent(field.getName(), 350, 350, 17);
-				c.setOffsetY(5);
-				c.setOffsetX(offsetX + 3);
+				MinimizableComponent c = new MinimizableComponent(field.getName(), container.getWidth(), 350);
 				c.setMinimized(false);
-				//c.setScaleChildren(false);
-				
 				container.addChild(c);
 				
-				addEditableFieldInputs(field.getValue(target), c, offsetX + 5);
+				addEditableFieldInputs(field.getValue(target), c);
 				
 				height += c.getHeight();
 				
@@ -83,17 +80,24 @@ public class ComponentInspector extends LabComponent {
 			});
 			
 			label = new Label(100, 20, field.getName());
+			label.setWidth(label.getTextWidth());
 			label.setFontSize(12);
-			label.setOffsetX(5 + offsetX);
+			label.setOffsetX(5);
 			container.addChild(label);
+			
 			container.addChild(input);
 			container.addChild(new EmptyComponent(1000000, 0));
+			
+			Rectangle rect = new Rectangle(getWidth(), 1);
+			rect.setFillColor(Color.lightGray);
+			rect.setStroke(false);
+			container.addChild(rect);
+			
 			
 			height += 20;
 			
 		}
 		
-		container.setHeight(height);
 		
 	}
 	

@@ -74,7 +74,7 @@ public class EditableFieldRegistry {
 		registerField("getIntensity", "setIntensity", "Intensity", integerSlider(1, 200));
 		registerField("getNoiseFrequency", "setNoiseFrequency", "Density", doubleSlider(0.1, 25, 0.1));
 		registerField("getNoiseIncrement", "setNoiseIncrement", "Speed", doubleSlider(0, 50, 1));
-		registerField("getSeed", "setSeed", "Seed", integerField());
+		registerField("getSeed", "setSeed", "Seed", integerField(0, Integer.MAX_VALUE));
 
 	}
 
@@ -83,7 +83,7 @@ public class EditableFieldRegistry {
 		return new InputComponentInstantiater() {
 			@Override
 			public InputComponent create() {
-				return new DoubleField(50, min, max, sigfigs, scientificNotationMinPower);
+				return new DoubleField(40, min, max, sigfigs, scientificNotationMinPower);
 			}
 		};
 	}
@@ -92,7 +92,7 @@ public class EditableFieldRegistry {
 		return new InputComponentInstantiater() {
 			@Override
 			public InputComponent create() {
-				return new DoubleField(50, min, max, sigfigs);
+				return new DoubleField(40, min, max, sigfigs);
 			}
 		};
 	}
@@ -101,7 +101,7 @@ public class EditableFieldRegistry {
 		return new InputComponentInstantiater() {
 			@Override
 			public InputComponent create() {
-				return new DoubleField(50, Double.MIN_VALUE, Double.MAX_VALUE, sigfigs, scientificNotationMinPower);
+				return new DoubleField(40, Double.MIN_VALUE, Double.MAX_VALUE, sigfigs, scientificNotationMinPower);
 			}
 		};
 	}
@@ -111,7 +111,7 @@ public class EditableFieldRegistry {
 			@Override
 			public InputComponent create() {
 
-				return new IntegerField(50, min, max);
+				return new IntegerField(40, min, max);
 			}
 		};
 	}
@@ -120,7 +120,7 @@ public class EditableFieldRegistry {
 		return new InputComponentInstantiater() {
 			@Override
 			public InputComponent create() {
-				return new IntegerField(50, Integer.MIN_VALUE, Integer.MAX_VALUE);
+				return new IntegerField(40, Integer.MIN_VALUE, Integer.MAX_VALUE);
 			}
 		};
 	}
