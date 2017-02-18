@@ -8,14 +8,12 @@ import lab.component.swing.input.DropdownMenu;
 import lab.component.swing.input.InputComponent;
 import lab.component.swing.input.IntegerField;
 import lab.component.swing.input.IntegerSlider;
+import lab.component.swing.input.TextField;
 
 public abstract class InputComponentInstantiater {
 
 	public abstract InputComponent create();
 
-	
-	
-	
 	private static final int NUMBER_FIELD_WIDTH = 60;
 
 	static InputComponentInstantiater doubleField(double min, double max, int sigfigs, int scientificNotationMinPower) {
@@ -63,6 +61,30 @@ public abstract class InputComponentInstantiater {
 			}
 		};
 	}
+	
+	static InputComponentInstantiater textField(int columns, String deflt) {
+		return new InputComponentInstantiater() {
+			@Override
+			public InputComponent create() {
+				TextField tf = new TextField(columns * 5, 25, deflt);
+				tf.setColumns(columns);
+				return tf;
+			}
+		};
+	}
+	
+	static InputComponentInstantiater textField(String deflt) {
+		return new InputComponentInstantiater() {
+			@Override
+			public InputComponent create() {
+				return new TextField(60, 25, deflt);
+			}
+		};
+	}
+	
+	static InputComponentInstantiater textField() {
+		return textField("");
+	}
 
 	static InputComponentInstantiater doubleSlider(double min, double max, double increment) {
 		return new InputComponentInstantiater() {
@@ -91,11 +113,11 @@ public abstract class InputComponentInstantiater {
 		};
 	}
 
-	static InputComponentInstantiater changeColorButton(String name) {
+	static InputComponentInstantiater changeColorButton() {
 		return new InputComponentInstantiater() {
 			@Override
 			public InputComponent create() {
-				return new ChangeColorButton(150, 25, name);
+				return new ChangeColorButton(100, 25, "Change");
 			}
 		};
 	}
