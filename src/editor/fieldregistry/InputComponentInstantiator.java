@@ -10,14 +10,14 @@ import lab.component.swing.input.IntegerField;
 import lab.component.swing.input.IntegerSlider;
 import lab.component.swing.input.TextField;
 
-public abstract class InputComponentInstantiater {
+public abstract class InputComponentInstantiator {
 
 	public abstract InputComponent create();
 
 	private static final int NUMBER_FIELD_WIDTH = 60;
 
-	static InputComponentInstantiater doubleField(double min, double max, int sigfigs, int scientificNotationMinPower) {
-		return new InputComponentInstantiater() {
+	static InputComponentInstantiator doubleField(double min, double max, int sigfigs, int scientificNotationMinPower) {
+		return new InputComponentInstantiator() {
 			@Override
 			public InputComponent create() {
 				return new DoubleField(NUMBER_FIELD_WIDTH, min, max, sigfigs, scientificNotationMinPower);
@@ -25,8 +25,8 @@ public abstract class InputComponentInstantiater {
 		};
 	}
 
-	static InputComponentInstantiater doubleField(double min, double max, int sigfigs) {
-		return new InputComponentInstantiater() {
+	static InputComponentInstantiator doubleField(double min, double max, int sigfigs) {
+		return new InputComponentInstantiator() {
 			@Override
 			public InputComponent create() {
 				return new DoubleField(NUMBER_FIELD_WIDTH, min, max, sigfigs);
@@ -34,8 +34,8 @@ public abstract class InputComponentInstantiater {
 		};
 	}
 
-	static InputComponentInstantiater doubleField(int sigfigs, int scientificNotationMinPower) {
-		return new InputComponentInstantiater() {
+	static InputComponentInstantiator doubleField(int sigfigs, int scientificNotationMinPower) {
+		return new InputComponentInstantiator() {
 			@Override
 			public InputComponent create() {
 				return new DoubleField(NUMBER_FIELD_WIDTH, -Double.MAX_VALUE, Double.MAX_VALUE, sigfigs, scientificNotationMinPower);
@@ -43,8 +43,8 @@ public abstract class InputComponentInstantiater {
 		};
 	}
 
-	static InputComponentInstantiater integerField(int min, int max) {
-		return new InputComponentInstantiater() {
+	static InputComponentInstantiator integerField(int min, int max) {
+		return new InputComponentInstantiator() {
 			@Override
 			public InputComponent create() {
 
@@ -53,8 +53,8 @@ public abstract class InputComponentInstantiater {
 		};
 	}
 
-	static InputComponentInstantiater integerField() {
-		return new InputComponentInstantiater() {
+	static InputComponentInstantiator integerField() {
+		return new InputComponentInstantiator() {
 			@Override
 			public InputComponent create() {
 				return new IntegerField(NUMBER_FIELD_WIDTH, Integer.MIN_VALUE, Integer.MAX_VALUE);
@@ -62,8 +62,8 @@ public abstract class InputComponentInstantiater {
 		};
 	}
 	
-	static InputComponentInstantiater textField(int columns, String deflt) {
-		return new InputComponentInstantiater() {
+	static InputComponentInstantiator textField(int columns, String deflt) {
+		return new InputComponentInstantiator() {
 			@Override
 			public InputComponent create() {
 				TextField tf = new TextField(columns * 5, 25, deflt);
@@ -73,8 +73,8 @@ public abstract class InputComponentInstantiater {
 		};
 	}
 	
-	static InputComponentInstantiater textField(String deflt) {
-		return new InputComponentInstantiater() {
+	static InputComponentInstantiator textField(String deflt) {
+		return new InputComponentInstantiator() {
 			@Override
 			public InputComponent create() {
 				return new TextField(60, 25, deflt);
@@ -82,12 +82,12 @@ public abstract class InputComponentInstantiater {
 		};
 	}
 	
-	static InputComponentInstantiater textField() {
+	static InputComponentInstantiator textField() {
 		return textField("");
 	}
 
-	static InputComponentInstantiater doubleSlider(double min, double max, double increment) {
-		return new InputComponentInstantiater() {
+	static InputComponentInstantiator doubleSlider(double min, double max, double increment) {
+		return new InputComponentInstantiator() {
 			@Override
 			public InputComponent create() {
 				return new DoubleSlider(150, 25, min, max, increment, DoubleSlider.HORIZONTAL);
@@ -95,8 +95,8 @@ public abstract class InputComponentInstantiater {
 		};
 	}
 
-	static InputComponentInstantiater integerSlider(int min, int max) {
-		return new InputComponentInstantiater() {
+	static InputComponentInstantiator integerSlider(int min, int max) {
+		return new InputComponentInstantiator() {
 			@Override
 			public InputComponent create() {
 				return new IntegerSlider(150, 25, min, max, DoubleSlider.HORIZONTAL);
@@ -104,8 +104,8 @@ public abstract class InputComponentInstantiater {
 		};
 	}
 
-	static InputComponentInstantiater checkBox() {
-		return new InputComponentInstantiater() {
+	static InputComponentInstantiator checkBox() {
+		return new InputComponentInstantiator() {
 			@Override
 			public InputComponent create() {
 				return new CheckBox(25, 20, "");
@@ -113,8 +113,8 @@ public abstract class InputComponentInstantiater {
 		};
 	}
 
-	static InputComponentInstantiater changeColorButton() {
-		return new InputComponentInstantiater() {
+	static InputComponentInstantiator changeColorButton() {
+		return new InputComponentInstantiator() {
 			@Override
 			public InputComponent create() {
 				return new ChangeColorButton(100, 25, "Change");
@@ -123,8 +123,8 @@ public abstract class InputComponentInstantiater {
 	}
 
 	@SafeVarargs
-	static <E> InputComponentInstantiater dropdownMenu(E... args) {
-		return new InputComponentInstantiater() {
+	static <E> InputComponentInstantiator dropdownMenu(E... args) {
+		return new InputComponentInstantiator() {
 			@Override
 			public InputComponent create() {
 				return new DropdownMenu<E>(100, 25, args);

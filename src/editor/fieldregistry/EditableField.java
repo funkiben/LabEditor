@@ -8,16 +8,16 @@ public class EditableField {
 	private final String name;
 	private final Method getter;
 	private final Method setter;
-	private final InputComponentInstantiater inputComponentInstantiator;
+	private final InputComponentInstantiator inputComponentInstantiator;
 	
-	public EditableField(String name, Method getter, Method setter, InputComponentInstantiater inputComponentInstantiator) {
+	public EditableField(String name, Method getter, Method setter, InputComponentInstantiator inputComponentInstantiator) {
 		this.name = name;
 		this.getter = getter;
 		this.setter = setter;
 		this.inputComponentInstantiator = inputComponentInstantiator;
 	}
 	
-	public InputComponentInstantiater getInputComponentInstantiator() {
+	public InputComponentInstantiator getInputComponentInstantiator() {
 		return inputComponentInstantiator;
 	}
 	

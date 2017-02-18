@@ -22,7 +22,7 @@ import lab.component.fx.Flame;
 import lab.component.sensor.Manometer;
 import lab.component.sensor.Thermometer;
 
-import static editor.fieldregistry.InputComponentInstantiater.*;
+import static editor.fieldregistry.InputComponentInstantiator.*;
 
 public class EditableFieldRegistry {
 
@@ -93,7 +93,7 @@ public class EditableFieldRegistry {
 		hiddenFields.put(clazz, list);
 	}
 
-	private static void registerField(String getter, String setter, String name, InputComponentInstantiater inputComponentInstantiator) {
+	private static void registerField(String getter, String setter, String name, InputComponentInstantiator inputComponentInstantiator) {
 		registerField(currentClass, getter, setter, name, inputComponentInstantiator);
 	}
 
@@ -105,7 +105,7 @@ public class EditableFieldRegistry {
 		registerField(clazz, getter, null, name, null);
 	}
 	
-	private static void registerField(Class<?> clazz, String getter, String setter, String name, InputComponentInstantiater inputComponentInstantiator) {
+	private static void registerField(Class<?> clazz, String getter, String setter, String name, InputComponentInstantiator inputComponentInstantiator) {
 		Method getterMethod, setterMethod = null;
 
 		try {
