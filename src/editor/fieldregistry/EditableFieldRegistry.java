@@ -3,10 +3,12 @@ package editor.fieldregistry;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import editor.input.ChangeColorButton;
 import lab.component.BunsenBurner;
@@ -30,9 +32,12 @@ import lab.component.swing.input.InputComponent;
 public class EditableFieldRegistry {
 
 	private static final Map<Class<?>, List<EditableField>> registry = new HashMap<Class<?>, List<EditableField>>();
-
+	private static final Map<Class<?>, List<String>> hiddenFields = new HashMap<Class<?>, List<String>>();
+	
 	private static Class<?> currentClass = null;
 
+	private static final int NUMBER_FIELD_WIDTH = 60;
+	
 	static {
 
 		currentClass = LabComponent.class;
@@ -42,28 +47,25 @@ public class EditableFieldRegistry {
 		registerField("getWidth", "setWidth", "Width", integerField(1, 9999));
 		registerField("getHeight", "setHeight", "Height", integerField(1, 9999));
 		registerField("isVisible", "setVisible", "Visible", checkBox());
-
-		currentClass = MeasurableComponent.class;
-		registerField("getValue", "setValue", "Value", doubleField(0, 9999, 4));
-		registerField("canShowValue", "setShowValue", "Show Value", checkBox());
-
+		
+		registerField(MeasurableComponent.class, "getValue", "setValue", "Value", doubleField(0, 9999, 4, 5));
+		
 		registerField(GraduatedComponent.class, "getGraduation", "setGraduation", "Graduation", null);
-
-		currentClass = Graduation.class;
-		registerField("getStart", "setStart", "Graduation Start", doubleField(5, 5));
-		registerField("getEnd", "setEnd", "Graduation End", doubleField(5, 5));
-		registerField("getLineIntervals", "setLineIntervals", "Graduation Tick Intervals", doubleField(3, 5));
-		registerField("getSubLineIntervals", "setSubLineIntervals", "Graduation Subtick Intervals", doubleField(3, 5));
-
+		
 		currentClass = Manometer.class;
 		registerField("getValue", "setValue", "Pressure Reading", doubleField(0, Double.MAX_VALUE, 5, 5));
 		registerField("getGraduation", "setGraduation", "Graduation", null);
 
 		currentClass = Container.class;
-		registerField("getColor", "setColor", "Content Color", changeColorButton("Change Content Color"));
-		registerField("getContentState", "setContentState", "Content State",
-				dropdownMenu(ContentState.GAS, ContentState.LIQUID, ContentState.SOLID));
+		registerField("getContentColor", "setContentColor", "Content Color", changeColorButton("Change Content Color"));
+		registerField("getContentState", "setContentState", "Content State", dropdownMenu(ContentState.GAS, ContentState.LIQUID, ContentState.SOLID));
 
+		currentClass = Graduation.class;
+		registerField("getStart", "setStart", "Start", doubleField(5, 5));
+		registerField("getEnd", "setEnd", "End", doubleField(5, 5));
+		registerField("getLineIntervals", "setLineIntervals", "Tick Intervals", doubleField(3, 5));
+		registerField("getSubLineIntervals", "setSubLineIntervals", "Subtick Intervals", doubleField(3, 5));
+		
 		registerField(Piston.class, "getGasColor", "setGasColor", "Gas Color", changeColorButton("Change Gas Color"));
 
 		registerField(BunsenBurner.class, "getFlame", null, "Flame", null);
@@ -75,15 +77,15 @@ public class EditableFieldRegistry {
 		registerField("getNoiseFrequency", "setNoiseFrequency", "Density", doubleSlider(0.1, 25, 0.1));
 		registerField("getNoiseIncrement", "setNoiseIncrement", "Speed", doubleSlider(0, 50, 1));
 		registerField("getSeed", "setSeed", "Seed", integerField(0, Integer.MAX_VALUE));
+		hideField("X", "Y", "Z", "Width", "Height");
 
 	}
 
-	private static InputComponentInstantiater doubleField(double min, double max, int sigfigs,
-			int scientificNotationMinPower) {
+	private static InputComponentInstantiater doubleField(double min, double max, int sigfigs, int scientificNotationMinPower) {
 		return new InputComponentInstantiater() {
 			@Override
 			public InputComponent create() {
-				return new DoubleField(40, min, max, sigfigs, scientificNotationMinPower);
+				return new DoubleField(NUMBER_FIELD_WIDTH, min, max, sigfigs, scientificNotationMinPower);
 			}
 		};
 	}
@@ -92,7 +94,7 @@ public class EditableFieldRegistry {
 		return new InputComponentInstantiater() {
 			@Override
 			public InputComponent create() {
-				return new DoubleField(40, min, max, sigfigs);
+				return new DoubleField(NUMBER_FIELD_WIDTH, min, max, sigfigs);
 			}
 		};
 	}
@@ -101,7 +103,7 @@ public class EditableFieldRegistry {
 		return new InputComponentInstantiater() {
 			@Override
 			public InputComponent create() {
-				return new DoubleField(40, Double.MIN_VALUE, Double.MAX_VALUE, sigfigs, scientificNotationMinPower);
+				return new DoubleField(NUMBER_FIELD_WIDTH, -Double.MAX_VALUE, Double.MAX_VALUE, sigfigs, scientificNotationMinPower);
 			}
 		};
 	}
@@ -111,7 +113,7 @@ public class EditableFieldRegistry {
 			@Override
 			public InputComponent create() {
 
-				return new IntegerField(40, min, max);
+				return new IntegerField(NUMBER_FIELD_WIDTH, min, max);
 			}
 		};
 	}
@@ -120,7 +122,7 @@ public class EditableFieldRegistry {
 		return new InputComponentInstantiater() {
 			@Override
 			public InputComponent create() {
-				return new IntegerField(40, Integer.MIN_VALUE, Integer.MAX_VALUE);
+				return new IntegerField(NUMBER_FIELD_WIDTH, Integer.MIN_VALUE, Integer.MAX_VALUE);
 			}
 		};
 	}
@@ -166,9 +168,27 @@ public class EditableFieldRegistry {
 		return new InputComponentInstantiater() {
 			@Override
 			public InputComponent create() {
-				return new DropdownMenu<E>(200, 25, args);
+				return new DropdownMenu<E>(100, 25, args);
 			}
 		};
+	}
+	
+	private static void hideField(String... names) {
+		hideField(currentClass, names);
+	}
+	
+	private static void hideField(Class<?> clazz, String...names) {
+		List<String> list = hiddenFields.get(clazz);
+		
+		if (list == null) {
+			list = new ArrayList<String>();
+		}
+		
+		for (String name : names) {
+			list.add(name);
+		}
+		
+		hiddenFields.put(clazz, list);
 	}
 
 	private static void registerField(String getter, String setter, String name,
@@ -218,6 +238,21 @@ public class EditableFieldRegistry {
 
 		}
 	}
+	
+	private static void removeHiddenFields(Set<EditableField> editableFields, Class<?> c) {
+		List<String> hidden = hiddenFields.get(c);
+		
+		if (hidden != null) {
+			Iterator<EditableField> iter = editableFields.iterator();
+			
+			while (iter.hasNext()) {
+				if (hidden.contains(iter.next().getName())) {
+					iter.remove();
+				}
+			}
+			
+		}
+	}
 
 	public static Set<EditableField> getEditableFields(Class<?> c) {
 		Set<EditableField> editableFields = new LinkedHashSet<EditableField>();
@@ -225,9 +260,13 @@ public class EditableFieldRegistry {
 		if (c.getSuperclass() != Object.class) {
 			editableFields.addAll(getEditableFields(c.getSuperclass()));
 		}
-
-		editableFields.addAll(registry.get(c));
-
+		
+		if (registry.containsKey(c)) {
+			editableFields.addAll(registry.get(c));
+		}
+		
+		removeHiddenFields(editableFields, c);
+		
 		return editableFields;
 	}
 

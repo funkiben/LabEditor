@@ -98,6 +98,11 @@ public class ComponentInspector extends LabComponent {
 			
 		}
 		
+		Rectangle rect = new Rectangle(getWidth(), 3);
+		rect.setFillColor(Color.lightGray);
+		rect.setStroke(false);
+		container.addChild(rect);
+		
 		
 	}
 	

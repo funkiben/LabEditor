@@ -2,8 +2,8 @@ package editor;
 
 import editor.window.EditorWindow;
 import lab.LabFrame;
-import lab.component.BunsenBurner;
 import lab.component.LabComponent;
+import lab.component.container.Beaker;
 
 public class LabEditor extends LabFrame {
 
@@ -58,7 +58,7 @@ public class LabEditor extends LabFrame {
 		testWindow.setOffsetY(45);
 		testWindow.setResizable(false);
 		
-		LabComponent target = new BunsenBurner(30, 350);
+		LabComponent target = new Beaker(200, 300);
 		
 		inspector.setTarget(target);
 		
