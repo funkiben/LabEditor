@@ -19,7 +19,7 @@ public class MinimizableComponent extends LabComponent {
 	private final String title;
 	private final ClickableArea clickArea;
 	private boolean isMinimized = false;
-	private final int expandedHeight;
+	private int expandedHeight;
 	private final Animator animator = new Animator();
 	private final int minimizedHeight = 17;
 	
@@ -47,6 +47,12 @@ public class MinimizableComponent extends LabComponent {
 	
 	public int getMinimizedHeight() {
 		return minimizedHeight;
+	}
+	
+	@Override
+	public void setHeight(int height) {
+		super.setHeight(height);
+		this.expandedHeight = height;
 	}
 	
 	public void setMinimized(boolean isMinimized) {
@@ -145,6 +151,7 @@ public class MinimizableComponent extends LabComponent {
 		
 		if (clickArea.hasClick() && !animator.animationExists("stretch")) {
 			setMinimized(!isMinimized);
+			clickArea.mouseReleased(null);
 		}
 		
 		//g.setColor(Color.darkGray);
