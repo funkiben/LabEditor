@@ -48,7 +48,7 @@ public class EditableFieldRegistry {
 		registerField(Manometer.class, "getValue", "setValue", "Pressure", doubleField(0, 9999999, 5, 5));
 		
 		currentClass = Container.class;
-		registerField("getContentColor", "setContentColor", "Content Color", changeColorButton("Change Color"));
+		registerField("getContentColor", "setContentColor", "Content Color", changeColorButton());
 		registerField("getContentState", "setContentState", "Content State", dropdownMenu(ContentState.GAS, ContentState.LIQUID, ContentState.SOLID));
 
 		currentClass = Graduation.class;
@@ -56,8 +56,8 @@ public class EditableFieldRegistry {
 		registerField("getEnd", "setEnd", "End", doubleField(5, 5));
 		registerField("getLineIntervals", "setLineIntervals", "Tick Intervals", doubleField(0, 999999, 3, 5));
 		registerField("getSubLineIntervals", "setSubLineIntervals", "Subtick Intervals", doubleField(0, 999999, 3, 5));
-		
-		registerField(Piston.class, "getGasColor", "setGasColor", "Gas Color", changeColorButton("Change Color"));
+		registerField("getSuffix", "setSuffix", "Units", textField(""));
+		registerField(Piston.class, "getGasColor", "setGasColor", "Gas Color", changeColorButton());
 
 		registerField(BunsenBurner.class, "getFlame", "Flame");
 
