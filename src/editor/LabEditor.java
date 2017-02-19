@@ -2,7 +2,7 @@ package editor;
 
 import editor.window.EditorWindow;
 import lab.LabFrame;
-
+import lab.component.BunsenBurner;
 import lab.component.LabComponent;
 import lab.component.container.Flask;
 
@@ -59,7 +59,7 @@ public class LabEditor extends LabFrame {
 		testWindow.setOffsetY(45);
 		testWindow.setResizable(false);
 		
-		LabComponent target = new Flask(500, 500);
+		LabComponent target = new BunsenBurner(50, 500);
 		
 		inspector.setTarget(target);
 		

@@ -15,6 +15,7 @@ public abstract class InputComponentInstantiator {
 	public abstract InputComponent create();
 
 	private static final int NUMBER_FIELD_WIDTH = 60;
+	private static final int SLIDER_WIDTH = 150;
 
 	static InputComponentInstantiator doubleField(double min, double max, int sigfigs, int scientificNotationMinPower) {
 		return new InputComponentInstantiator() {
@@ -66,7 +67,7 @@ public abstract class InputComponentInstantiator {
 		return new InputComponentInstantiator() {
 			@Override
 			public InputComponent create() {
-				TextField tf = new TextField(columns * 5, 25, deflt);
+				TextField tf = new TextField(columns * 5, deflt);
 				tf.setColumns(columns);
 				return tf;
 			}
@@ -77,7 +78,7 @@ public abstract class InputComponentInstantiator {
 		return new InputComponentInstantiator() {
 			@Override
 			public InputComponent create() {
-				return new TextField(60, 25, deflt);
+				return new TextField(60, deflt);
 			}
 		};
 	}
@@ -90,7 +91,7 @@ public abstract class InputComponentInstantiator {
 		return new InputComponentInstantiator() {
 			@Override
 			public InputComponent create() {
-				return new DoubleSlider(150, 25, min, max, increment, DoubleSlider.HORIZONTAL);
+				return new DoubleSlider(SLIDER_WIDTH, min, max, increment, DoubleSlider.HORIZONTAL);
 			}
 		};
 	}
@@ -99,7 +100,7 @@ public abstract class InputComponentInstantiator {
 		return new InputComponentInstantiator() {
 			@Override
 			public InputComponent create() {
-				return new IntegerSlider(150, 25, min, max, DoubleSlider.HORIZONTAL);
+				return new IntegerSlider(SLIDER_WIDTH, min, max, DoubleSlider.HORIZONTAL);
 			}
 		};
 	}
