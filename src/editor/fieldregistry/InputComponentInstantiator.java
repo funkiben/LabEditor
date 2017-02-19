@@ -63,28 +63,25 @@ public abstract class InputComponentInstantiator {
 		};
 	}
 	
-	static InputComponentInstantiator textField(int columns, String deflt) {
+	static InputComponentInstantiator textField(int width, String deflt) {
 		return new InputComponentInstantiator() {
 			@Override
 			public InputComponent create() {
-				TextField tf = new TextField(columns * 5, deflt);
-				tf.setColumns(columns);
-				return tf;
-			}
-		};
-	}
-	
-	static InputComponentInstantiator textField(String deflt) {
-		return new InputComponentInstantiator() {
-			@Override
-			public InputComponent create() {
-				return new TextField(60, deflt);
+				return new TextField(width, deflt);
 			}
 		};
 	}
 	
 	static InputComponentInstantiator textField() {
 		return textField("");
+	}
+	
+	static InputComponentInstantiator textField(String deflt) {
+		return textField(60, deflt);
+	}
+	
+	static InputComponentInstantiator textField(int width) {
+		return textField(width, "");
 	}
 
 	static InputComponentInstantiator doubleSlider(double min, double max, double increment) {

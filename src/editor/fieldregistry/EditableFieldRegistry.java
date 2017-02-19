@@ -21,6 +21,18 @@ import lab.component.container.ContentState;
 import lab.component.fx.Flame;
 import lab.component.sensor.Manometer;
 import lab.component.sensor.Thermometer;
+import lab.component.swing.Label;
+import lab.component.swing.SwingComponent;
+import lab.component.swing.input.Button;
+import lab.component.swing.input.CheckBox;
+import lab.component.swing.input.DoubleField;
+import lab.component.swing.input.DoubleSlider;
+import lab.component.swing.input.FontStyle;
+import lab.component.swing.input.IntegerField;
+import lab.component.swing.input.IntegerSlider;
+import lab.component.swing.input.LabeledDoubleSlider;
+import lab.component.swing.input.LabeledIntegerSlider;
+import lab.component.swing.input.TextField;
 
 import static editor.fieldregistry.InputComponentInstantiator.*;
 
@@ -72,7 +84,54 @@ public class EditableFieldRegistry {
 		
 		hideField(Bulb.class, "Graduation");
 		hideField(Thermometer.class, "Width");
-
+		
+		registerField(SwingComponent.class, "isEnabled", "setEnabled", "Enabled", checkBox());
+		
+		currentClass = Label.class;
+		registerField("getText", "setText", "Text", textField(150));
+		registerField("getFontSize", "setFontSize", "Font Size", integerField(1, 200));
+		registerField("getFontStyle", "setFontStyle", "Font Style", dropdownMenu(FontStyle.PLAIN, FontStyle.BOLD, FontStyle.ITALIC));
+		registerField("canWrap", "setWrap", "Wrap", checkBox());
+		
+		currentClass = Button.class;
+		registerField("getText", "setText", "Text", textField(150));
+		registerField("getFontSize", "setFontSize", "Font Size", integerField(1, 200));
+		registerField("getFontStyle", "setFontStyle", "Font Style", dropdownMenu(FontStyle.PLAIN, FontStyle.BOLD, FontStyle.ITALIC));
+		
+		registerField(CheckBox.class, "isSelected", "setSelected", "Selected", checkBox());
+		
+		registerField(TextField.class, "getText", "setText", "Text", textField(150));
+		
+		currentClass = DoubleField.class;
+		registerField("getValue", "setValue", "Value", doubleField(5, 5));
+		registerField("getMin", "setMin", "Minimum", doubleField(5, 5));
+		registerField("getMax", "setMax", "Maximum", doubleField(5, 5));
+		registerField("getSigFigs", "setSigFigs", "Sig Figs", integerField(1, 99999));
+		hideField("Text");
+		
+		currentClass = IntegerField.class;
+		registerField("getValue", "setValue", "Value", integerField());
+		registerField("getMin", "setMin", "Minimum", integerField());
+		registerField("getMax", "setMax", "Maximum", integerField());
+		hideField("Text");
+		
+		currentClass = DoubleSlider.class;
+		registerField("getValue", "setValue", "Value", doubleField(5, 5));
+		registerField("getMin", "setMin", "Minimum", doubleField(5, 5));
+		registerField("getMax", "setMax", "Maximum", doubleField(5, 5));
+		registerField("getIncrement", "setIncrement", "Increment", doubleField(3, 5));
+		
+		currentClass = LabeledDoubleSlider.class;
+		registerField("getSigFigs", "setSigFigs", "Sig Figs", integerField(1, 99999));
+		registerField("getLabel", "Label");
+		
+		currentClass = IntegerSlider.class;
+		registerField("getValue", "setValue", "Value", integerField());
+		registerField("getMin", "setMin", "Minimum", integerField());
+		registerField("getMax", "setMax", "Maximum", integerField());
+		
+		currentClass = LabeledIntegerSlider.class;
+		registerField("getLabel", "Label");
 	}
 
 	private static void hideField(String... names) {
@@ -94,7 +153,15 @@ public class EditableFieldRegistry {
 	}
 
 	private static void registerField(String getter, String setter, String name, InputComponentInstantiator inputComponentInstantiator) {
-		registerField(currentClass, getter, setter, name, inputComponentInstantiator);
+		registerField(getter, setter, name, inputComponentInstantiator, null);
+	}
+	
+	private static void registerField(Class<?> clazz, String getter, String setter, String name, InputComponentInstantiator inputComponentInstantiator) {
+		registerField(clazz, getter, setter, name, inputComponentInstantiator, null);
+	}
+	
+	private static void registerField(String getter, String setter, String name, InputComponentInstantiator inputComponentInstantiator, Class<?> setterParameter) {
+		registerField(currentClass, getter, setter, name, inputComponentInstantiator, setterParameter);
 	}
 
 	private static void registerField(String getter, String name) {
@@ -105,19 +172,23 @@ public class EditableFieldRegistry {
 		registerField(clazz, getter, null, name, null);
 	}
 	
-	private static void registerField(Class<?> clazz, String getter, String setter, String name, InputComponentInstantiator inputComponentInstantiator) {
+	private static void registerField(Class<?> clazz, String getter, String setter, String name, InputComponentInstantiator inputComponentInstantiator, Class<?> setterParameter) {
 		Method getterMethod, setterMethod = null;
 
 		try {
 			getterMethod = clazz.getMethod(getter);
 			
 			if (setter != null) {
-				for (Method method : clazz.getDeclaredMethods()) {
-					if (method.getName().equals(setter)) {
-						setterMethod = method;
-						setterMethod.setAccessible(true);
-						break;
+				if (setterParameter == null) {
+					for (Method method : clazz.getDeclaredMethods()) {
+						if (method.getName().equals(setter)) {
+							setterMethod = method;
+							setterMethod.setAccessible(true);
+							break;
+						}
 					}
+				} else {
+					setterMethod = clazz.getDeclaredMethod(setter, setterParameter);
 				}
 			}
 

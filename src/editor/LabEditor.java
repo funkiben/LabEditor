@@ -1,10 +1,18 @@
 package editor;
 
+import java.awt.Font;
+
 import editor.window.EditorWindow;
 import lab.LabFrame;
-import lab.component.BunsenBurner;
 import lab.component.LabComponent;
-import lab.component.container.Flask;
+import lab.component.swing.Label;
+import lab.component.swing.input.Button;
+import lab.component.swing.input.CheckBox;
+import lab.component.swing.input.DoubleField;
+import lab.component.swing.input.DoubleSlider;
+import lab.component.swing.input.IntegerField;
+import lab.component.swing.input.LabeledDoubleSlider;
+import lab.component.swing.input.LabeledIntegerSlider;
 
 public class LabEditor extends LabFrame {
 
@@ -59,7 +67,7 @@ public class LabEditor extends LabFrame {
 		testWindow.setOffsetY(45);
 		testWindow.setResizable(false);
 		
-		LabComponent target = new BunsenBurner(50, 500);
+		LabComponent target = new LabeledIntegerSlider(200, -100, 100, DoubleSlider.HORIZONTAL);
 		
 		inspector.setTarget(target);
 		
