@@ -4,7 +4,7 @@ import editor.input.ChangeColorButton;
 import lab.component.swing.input.CheckBox;
 import lab.component.swing.input.DoubleField;
 import lab.component.swing.input.DoubleSlider;
-import lab.component.swing.input.DropdownMenu;
+import lab.component.swing.input.Dropdown;
 import lab.component.swing.input.InputComponent;
 import lab.component.swing.input.IntegerField;
 import lab.component.swing.input.IntegerSlider;
@@ -121,11 +121,11 @@ public abstract class InputComponentInstantiator {
 	}
 
 	@SafeVarargs
-	static <E> InputComponentInstantiator dropdownMenu(E... args) {
+	static <E> InputComponentInstantiator dropdown(E... args) {
 		return new InputComponentInstantiator() {
 			@Override
 			public InputComponent create() {
-				return new DropdownMenu<E>(100, 25, args);
+				return new Dropdown<E>(100, 25, args);
 			}
 		};
 	}

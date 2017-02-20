@@ -19,7 +19,7 @@ import lab.component.sensor.Manometer;
 import lab.component.sensor.Thermometer;
 import lab.component.swing.Label;
 import lab.component.swing.input.Button;
-import lab.component.swing.input.DropdownMenu;
+import lab.component.swing.input.Dropdown;
 import lab.component.swing.input.DoubleField;
 import lab.component.swing.input.DoubleSlider;
 import lab.component.swing.input.Switch;
@@ -29,7 +29,7 @@ public class ComponentPicker extends LabComponent {
 	@SuppressWarnings("unchecked")
 	private static final Class<? extends LabComponent>[] components = new Class[] { BunsenBurner.class, Piston.class,
 			Beaker.class, Bulb.class, Flask.class, GraduatedCylinder.class, ParticleSystem.class, Manometer.class,
-			Thermometer.class, Flame.class, Graph.class, Button.class, DropdownMenu.class, Label.class, DoubleSlider.class,
+			Thermometer.class, Flame.class, Graph.class, Button.class, Dropdown.class, Label.class, DoubleSlider.class,
 			Switch.class, DoubleField.class };
 
 	private static final Map<Class<? extends LabComponent>, String> componentNameAliases = new HashMap<Class<? extends LabComponent>, String>();
@@ -47,7 +47,7 @@ public class ComponentPicker extends LabComponent {
 		Label header = new Label(100000, 20, "Pick Components: ");
 
 		Label inputHeader = new Label(100000, 20, "User Input");
-		DropdownMenu inputMenu = new DropdownMenu(150, 30, "Button", "Checkbox", "Dropdown Menu", "Slider",
+		Dropdown inputMenu = new Dropdown(150, 30, "Button", "Checkbox", "Dropdown Menu", "Slider",
 				"Slider (labeled)", "Text Box", "Text Box (numbers only)", "Switch");
 		Button addInput = new Button(120, 30, "Add Input") {
 			@Override
@@ -57,7 +57,7 @@ public class ComponentPicker extends LabComponent {
 		};
 
 		Label containerHeader = new Label(100000, 20, "Containers");
-		DropdownMenu containerMenu = new DropdownMenu(150, 30, "Beaker", "Bulb", "Flask", "Graduated Cylinder");
+		Dropdown containerMenu = new Dropdown(150, 30, "Beaker", "Bulb", "Flask", "Graduated Cylinder");
 		Button addContainer = new Button(120, 30, "Add Container") {
 			@Override
 			public void doSomething() {
@@ -67,7 +67,7 @@ public class ComponentPicker extends LabComponent {
 		};
 
 		Label equipmentHeader = new Label(100000, 20, "Lab Equipment");
-		DropdownMenu equipmentMenu = new DropdownMenu(150, 30, "Bunsen Burner", "Piston");
+		Dropdown equipmentMenu = new Dropdown(150, 30, "Bunsen Burner", "Piston");
 		Button addEquipment = new Button(120, 30, "Add Equipment") {
 			@Override
 			public void doSomething() {
@@ -77,7 +77,7 @@ public class ComponentPicker extends LabComponent {
 		};
 
 		Label sensorHeader = new Label(100000, 20, "Sensors");
-		DropdownMenu sensorMenu = new DropdownMenu(150, 30, "Thermometer", "Manometer");
+		Dropdown sensorMenu = new Dropdown(150, 30, "Thermometer", "Manometer");
 		Button addSensor = new Button(120, 30, "Add Sensor") {
 			@Override
 			public void doSomething() {
@@ -87,7 +87,7 @@ public class ComponentPicker extends LabComponent {
 		};
 
 		Label analysisHeader = new Label(100000, 20, "Analytics");
-		DropdownMenu analysisMenu = new DropdownMenu(150, 30, "Graph", "Data Table");
+		Dropdown analysisMenu = new Dropdown(150, 30, "Graph", "Data Table");
 		Button addAnalysis = new Button(120, 30, "Add Analytics") {
 			@Override
 			public void doSomething() {

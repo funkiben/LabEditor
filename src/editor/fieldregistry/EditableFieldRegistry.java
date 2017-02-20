@@ -61,7 +61,7 @@ public class EditableFieldRegistry {
 		
 		currentClass = Container.class;
 		registerField("getContentColor", "setContentColor", "Content Color", changeColorButton());
-		registerField("getContentState", "setContentState", "Content State", dropdownMenu(ContentState.GAS, ContentState.LIQUID, ContentState.SOLID));
+		registerField("getContentState", "setContentState", "Content State", dropdown(ContentState.GAS, ContentState.LIQUID, ContentState.SOLID));
 
 		currentClass = Graduation.class;
 		registerField("getStart", "setStart", "Start", doubleField(5, 5));
@@ -90,13 +90,13 @@ public class EditableFieldRegistry {
 		currentClass = Label.class;
 		registerField("getText", "setText", "Text", textField(150));
 		registerField("getFontSize", "setFontSize", "Font Size", integerField(1, 200));
-		registerField("getFontStyle", "setFontStyle", "Font Style", dropdownMenu(FontStyle.PLAIN, FontStyle.BOLD, FontStyle.ITALIC));
+		registerField("getFontStyle", "setFontStyle", "Font Style", dropdown(FontStyle.PLAIN, FontStyle.BOLD, FontStyle.ITALIC));
 		registerField("canWrap", "setWrap", "Wrap", checkBox());
 		
 		currentClass = Button.class;
 		registerField("getText", "setText", "Text", textField(150));
 		registerField("getFontSize", "setFontSize", "Font Size", integerField(1, 200));
-		registerField("getFontStyle", "setFontStyle", "Font Style", dropdownMenu(FontStyle.PLAIN, FontStyle.BOLD, FontStyle.ITALIC));
+		registerField("getFontStyle", "setFontStyle", "Font Style", dropdown(FontStyle.PLAIN, FontStyle.BOLD, FontStyle.ITALIC));
 		
 		registerField(CheckBox.class, "isSelected", "setSelected", "Selected", checkBox());
 		
