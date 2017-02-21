@@ -1,4 +1,4 @@
-package editor.input;
+package editor.input.list;
 
 import java.awt.Component;
 import java.awt.event.KeyEvent;
@@ -10,11 +10,16 @@ import javax.swing.JScrollBar;
 
 import lab.component.swing.input.Button;
 import lab.component.swing.input.InputComponent;
-import lab.component.swing.input.ItemList;
 import lab.component.swing.input.TextField;
 
 public abstract class MutableItemList<E> extends InputComponent implements KeyListener {
 
+	private static final JPanel dummyComponent = new JPanel();
+
+	static {
+		dummyComponent.setOpaque(false);
+	}
+	
 	private final ItemList<E> itemList;
 	protected final TextField entryField = createEntryField();
 	private final Button addButton;
@@ -120,19 +125,12 @@ public abstract class MutableItemList<E> extends InputComponent implements KeyLi
 	public void update() {
 		addButton.setEnabled(entryField.hasInput());
 	}
-
-	private static final JPanel dummyComponent = new JPanel();
-
-	static {
-		dummyComponent.setOpaque(false);
-	}
 	
 	@Override
 	public Component getJComponent() {
 		return dummyComponent;
 	}
 	
-
 	@Override
 	public void keyTyped(KeyEvent e) {
 		

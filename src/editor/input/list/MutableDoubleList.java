@@ -1,4 +1,4 @@
-package editor.input;
+package editor.input.list;
 
 import lab.component.swing.input.DoubleField;
 import lab.component.swing.input.TextField;

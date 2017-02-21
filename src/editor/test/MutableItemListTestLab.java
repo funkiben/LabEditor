@@ -1,6 +1,6 @@
 package editor.test;
 
-import editor.input.MutableIntegerList;
+import editor.input.list.MutableIntegerList;
 import lab.LabFrame;
 
 public class MutableItemListTestLab extends LabFrame {
