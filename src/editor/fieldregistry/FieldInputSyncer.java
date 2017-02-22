@@ -25,7 +25,7 @@ public class FieldInputSyncer {
 	}
 	
 	public void sync(boolean checkField) {
-		if (inputComponent.getJComponent().hasFocus()) {
+		if (inputComponent.hasFocus()) {
 			if (!value.equals(inputComponent.getValue())) {
 				field.setValue(object, inputComponent.getValue());
 				value = inputComponent.getValue();

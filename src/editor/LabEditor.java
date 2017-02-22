@@ -10,6 +10,7 @@ import lab.component.swing.input.Button;
 import lab.component.swing.input.CheckBox;
 import lab.component.swing.input.DoubleField;
 import lab.component.swing.input.DoubleSlider;
+import lab.component.swing.input.Dropdown;
 import lab.component.swing.input.IntegerField;
 import lab.component.swing.input.LabeledDoubleSlider;
 import lab.component.swing.input.LabeledIntegerSlider;
@@ -67,7 +68,7 @@ public class LabEditor extends LabFrame {
 		testWindow.setOffsetY(45);
 		testWindow.setResizable(false);
 		
-		LabComponent target = new LabeledIntegerSlider(200, -100, 100, DoubleSlider.HORIZONTAL);
+		LabComponent target = new Dropdown<String>(100, 25);
 		
 		inspector.setTarget(target);
 		

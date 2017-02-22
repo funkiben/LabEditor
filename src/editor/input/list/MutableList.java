@@ -157,6 +157,11 @@ public abstract class MutableList<E> extends InputComponent {
 	public Component getJComponent() {
 		return dummyComponent;
 	}
+	
+	@Override
+	public boolean hasFocus() {
+		return itemList.hasFocus() || addButton.hasFocus() || entryField.hasFocus();
+	}
 
 	class EntryFieldKeyListener implements KeyListener {
 		@Override

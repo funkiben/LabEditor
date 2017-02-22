@@ -27,6 +27,7 @@ import lab.component.swing.input.Button;
 import lab.component.swing.input.CheckBox;
 import lab.component.swing.input.DoubleField;
 import lab.component.swing.input.DoubleSlider;
+import lab.component.swing.input.Dropdown;
 import lab.component.swing.input.FontStyle;
 import lab.component.swing.input.IntegerField;
 import lab.component.swing.input.IntegerSlider;
@@ -130,8 +131,10 @@ public class EditableFieldRegistry {
 		registerField("getMin", "setMin", "Minimum", integerField());
 		registerField("getMax", "setMax", "Maximum", integerField());
 		
-		currentClass = LabeledIntegerSlider.class;
-		registerField("getLabel", "Label");
+		registerField(LabeledIntegerSlider.class, "getLabel", "Label");
+		
+		registerField(Dropdown.class, "getItems", "setItems", "Options", mutableStringList());
+		
 	}
 
 	private static void hideField(String... names) {

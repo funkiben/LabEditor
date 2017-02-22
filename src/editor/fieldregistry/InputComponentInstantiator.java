@@ -1,6 +1,7 @@
 package editor.fieldregistry;
 
 import editor.input.ChangeColorButton;
+import editor.input.list.MutableStringList;
 import lab.component.swing.input.CheckBox;
 import lab.component.swing.input.DoubleField;
 import lab.component.swing.input.DoubleSlider;
@@ -126,6 +127,17 @@ public abstract class InputComponentInstantiator {
 			@Override
 			public InputComponent create() {
 				return new Dropdown<E>(100, 25, args);
+			}
+		};
+	}
+	
+	static InputComponentInstantiator mutableStringList() {
+		return new InputComponentInstantiator() {
+			@Override
+			public InputComponent create() {
+				MutableStringList list = new MutableStringList(170, 200);
+				list.setOffsetY(5);
+				return list;
 			}
 		};
 	}

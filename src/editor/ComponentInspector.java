@@ -86,7 +86,7 @@ public class ComponentInspector extends LabComponent {
 			container.addChild(rect);
 			
 			
-			height += 1 + Math.max(input.getHeight(), label.getHeight());
+			height += 1 + Math.max(input.getHeight() + input.getOffsetY(), label.getHeight());
 			
 		}
 		
