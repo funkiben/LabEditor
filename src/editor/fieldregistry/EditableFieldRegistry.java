@@ -13,7 +13,6 @@ import lab.component.BunsenBurner;
 import lab.component.GraduatedComponent;
 import lab.component.Graduation;
 import lab.component.LabComponent;
-import lab.component.MeasurableComponent;
 import lab.component.Piston;
 import lab.component.container.Bulb;
 import lab.component.container.Container;
@@ -56,16 +55,19 @@ public class EditableFieldRegistry {
 		registerField("getHeight", "setHeight", "Height", integerField(1, 9999));
 		registerField("isVisible", "setVisible", "Visible", checkBox());
 		
-		registerField(MeasurableComponent.class, "getValue", "setValue", "Value", doubleField(0, 9999, 4, 5));
-		
 		registerField(GraduatedComponent.class, "getGraduation", "Graduation");
 		
 		registerField(Manometer.class, "getValue", "setValue", "Pressure", doubleField(0, 9999999, 5, 5));
 		
+		currentClass = Thermometer.class;
+		registerField("getValue", "setValue", "Temperature", doubleField(0, 999999, 5, 5));
+		hideField("Width");
+		
 		currentClass = Container.class;
 		registerField("getContentColor", "setContentColor", "Content Color", changeColorButton());
 		registerField("getContentState", "setContentState", "Content State", dropdown(ContentState.GAS, ContentState.LIQUID, ContentState.SOLID));
-
+		registerField("getValue", "setValue", "Content Amount", doubleField(0, 999999, 5, 5));
+		
 		currentClass = Graduation.class;
 		registerField("getStart", "setStart", "Start", doubleField(5, 5));
 		registerField("getEnd", "setEnd", "End", doubleField(5, 5));
@@ -86,7 +88,8 @@ public class EditableFieldRegistry {
 		hideField("X", "Y", "Z", "Width", "Height");
 		
 		hideField(Bulb.class, "Graduation");
-		hideField(Thermometer.class, "Width");
+		
+		registerField(Piston.class, "getValue", "setValue", "Volume", doubleField(0, 999999, 5, 5));
 		
 		registerField(SwingComponent.class, "isEnabled", "setEnabled", "Enabled", checkBox());
 		
@@ -238,7 +241,7 @@ public class EditableFieldRegistry {
 			
 			if (setter != null) {
 				if (setterParameter == null) {
-					for (Method method : clazz.getDeclaredMethods()) {
+					for (Method method : clazz.getMethods()) {
 						if (method.getName().equals(setter)) {
 							setterMethod = method;
 							setterMethod.setAccessible(true);
@@ -246,7 +249,7 @@ public class EditableFieldRegistry {
 						}
 					}
 				} else {
-					setterMethod = clazz.getDeclaredMethod(setter, setterParameter);
+					setterMethod = clazz.getMethod(setter, setterParameter);
 				}
 			}
 

@@ -3,7 +3,8 @@ package editor;
 import editor.window.EditorWindow;
 import lab.LabFrame;
 import lab.component.LabComponent;
-import lab.component.geo.Line;
+import lab.component.Piston;
+import lab.component.container.Flask;
 
 public class LabEditor extends LabFrame {
 
@@ -58,7 +59,7 @@ public class LabEditor extends LabFrame {
 		testWindow.setOffsetY(45);
 		testWindow.setResizable(false);
 		
-		LabComponent target = new Line(100, 100, 200, 200);
+		LabComponent target = new Piston(50, 300);
 		
 		inspector.setTarget(target);
 		
