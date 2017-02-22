@@ -5,6 +5,9 @@ import java.awt.Font;
 import editor.window.EditorWindow;
 import lab.LabFrame;
 import lab.component.LabComponent;
+import lab.component.geo.Line;
+import lab.component.geo.Oval;
+import lab.component.geo.Rectangle;
 import lab.component.swing.Label;
 import lab.component.swing.input.Button;
 import lab.component.swing.input.CheckBox;
@@ -68,7 +71,7 @@ public class LabEditor extends LabFrame {
 		testWindow.setOffsetY(45);
 		testWindow.setResizable(false);
 		
-		LabComponent target = new Dropdown<String>(100, 25);
+		LabComponent target = new Line(100, 100, 200, 200);
 		
 		inspector.setTarget(target);
 		

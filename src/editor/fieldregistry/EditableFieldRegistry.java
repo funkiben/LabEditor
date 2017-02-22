@@ -19,6 +19,8 @@ import lab.component.container.Bulb;
 import lab.component.container.Container;
 import lab.component.container.ContentState;
 import lab.component.fx.Flame;
+import lab.component.geo.GeoComponent;
+import lab.component.geo.Line;
 import lab.component.sensor.Manometer;
 import lab.component.sensor.Thermometer;
 import lab.component.swing.Label;
@@ -135,6 +137,19 @@ public class EditableFieldRegistry {
 		
 		registerField(Dropdown.class, "getItems", "setItems", "Options", mutableStringList());
 		
+		currentClass = GeoComponent.class;
+		registerField("getFillColor", "setFillColor", "Fill Color", changeColorButton());
+		registerField("canFill", "setFill", "Fill", checkBox());
+		registerField("getStrokeColor", "setStrokeColor", "Stroke Color", changeColorButton());
+		registerField("canStroke", "setStroke", "Stroke", checkBox());
+		
+		currentClass = Line.class;
+		registerField("getStartX", "setStartX", "X1", integerField(0, 9999));
+		registerField("getStartY", "setStartY", "Y1", integerField(0, 9999));
+		registerField("getEndX", "setEndX", "X2", integerField(0, 9999));
+		registerField("getEndY", "setEndY", "Y2", integerField(0, 9999));
+		registerField("getColor", "setColor", "Color", changeColorButton());
+		hideField("X", "Y", "Width", "Height");
 	}
 
 	private static void hideField(String... names) {
