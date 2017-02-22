@@ -3,7 +3,7 @@ package editor.input.list;
 import lab.component.swing.input.DoubleField;
 import lab.component.swing.input.TextField;
 
-public class MutableDoubleList extends MutableItemList<Double> {
+public class MutableDoubleList extends MutableList<Double> {
 
 	public MutableDoubleList(int width, int height, double min, double max) {
 		super(width, height);
