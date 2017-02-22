@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import lab.Vector2;
 import lab.component.BunsenBurner;
 import lab.component.GraduatedComponent;
 import lab.component.Graduation;
@@ -19,6 +20,12 @@ import lab.component.container.Bulb;
 import lab.component.container.Container;
 import lab.component.container.ContentState;
 import lab.component.fx.Flame;
+import lab.component.fx.ParticleShape;
+import lab.component.fx.ParticleSystem;
+import lab.component.fx.RandomColorGenerator;
+import lab.component.fx.RandomDoubleGenerator;
+import lab.component.fx.RandomVector2Generator;
+import lab.component.fx.Vector2DistributionType;
 import lab.component.geo.GeoComponent;
 import lab.component.geo.Line;
 import lab.component.sensor.Manometer;
@@ -150,6 +157,46 @@ public class EditableFieldRegistry {
 		registerField("getEndY", "setEndY", "Y2", integerField(0, 9999));
 		registerField("getColor", "setColor", "Color", changeColorButton());
 		hideField("X", "Y", "Width", "Height");
+		
+		// ParticleSystem registry below
+		
+		/*
+		currentClass = Vector2.class;
+		registerField("getX", "setX", "X", doubleField(5, 5));
+		registerField("getY", "setY", "Y", doubleField(5, 5));
+		
+		currentClass = RandomVector2Generator.class;
+		registerField("getStart", "Lower Bound");
+		registerField("getEnd", "Upper Bound");
+		registerField("getType", "setType", "Type", dropdown(Vector2DistributionType.RECTANGLE, Vector2DistributionType.ELLIPSE, Vector2DistributionType.ELLIPSE_BORDER));
+		
+		currentClass = RandomDoubleGenerator.class;
+		registerField("getStart", "setStart", "Lower Bound", doubleField(5, 5));
+		registerField("getEnd", "setEnd", "Upper Bound", doubleField(5, 5));
+		
+		currentClass = RandomColorGenerator.class;
+		registerField("getRedStart", "setRedStart", "R Min", integerField(0, 255));
+		registerField("getRedEnd", "setRedEnd", "R Max", integerField(0, 255));
+		registerField("getGreenStart", "setGreenStart", "G Min", integerField(0, 255));
+		registerField("getGreenEnd", "setGreenEnd", "G Max", integerField(0, 255));
+		registerField("getBlueStart", "setBlueStart", "B Min", integerField(0, 255));
+		registerField("getBlueEnd", "setBlueEnd", "B Max", integerField(0, 255));
+		
+		currentClass = ParticleSystem.class;
+		registerField("getParticleSpawnRate", "setParticleSpawnRate", "Spawn Rate", doubleField(0, 99999));
+		registerField("getSpawnArea", "Spawn");
+		registerField("getVelocity", "Velocity");
+		registerField("getAcceleration", "Acceleration");
+		registerField("getParticleWidth", "Particle Width");
+		registerField("getParticleWidthChange", "Particle Width Change");
+		registerField("getParticleHeight", "Particle Height");
+		registerField("getParticleHeightChange", "Particle Height Change");
+		registerField("getSpeedChange", "Speed Change");
+		registerField("getColor", "Color");
+		registerField("getColor", "Color Fade");
+		registerField("getLifetime", "Life");
+		registerField("getShape", "setShape", "Particle Shape", dropdown(ParticleShape.ELLIPSE, ParticleShape.RECTANGLE));
+		*/
 	}
 
 	private static void hideField(String... names) {
