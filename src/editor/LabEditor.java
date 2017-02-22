@@ -1,22 +1,9 @@
 package editor;
 
-import java.awt.Font;
-
 import editor.window.EditorWindow;
 import lab.LabFrame;
 import lab.component.LabComponent;
 import lab.component.geo.Line;
-import lab.component.geo.Oval;
-import lab.component.geo.Rectangle;
-import lab.component.swing.Label;
-import lab.component.swing.input.Button;
-import lab.component.swing.input.CheckBox;
-import lab.component.swing.input.DoubleField;
-import lab.component.swing.input.DoubleSlider;
-import lab.component.swing.input.Dropdown;
-import lab.component.swing.input.IntegerField;
-import lab.component.swing.input.LabeledDoubleSlider;
-import lab.component.swing.input.LabeledIntegerSlider;
 
 public class LabEditor extends LabFrame {
 
