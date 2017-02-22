@@ -66,5 +66,9 @@ public class ChangeColorButton extends Button implements ChangeListener {
 		colorSampleRect.setFillColor(color);
 	}
 
+	@Override
+	public boolean hasFocus() {
+		return super.hasFocus() || colorChooser.isVisible();
+	}
 
 }
