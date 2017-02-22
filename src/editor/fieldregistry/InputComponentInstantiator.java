@@ -126,7 +126,7 @@ public abstract class InputComponentInstantiator {
 		return new InputComponentInstantiator() {
 			@Override
 			public InputComponent create() {
-				return new Dropdown<E>(100, 25, args);
+				return new Dropdown<E>(150, 25, args);
 			}
 		};
 	}
