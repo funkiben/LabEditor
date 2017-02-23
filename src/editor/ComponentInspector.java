@@ -9,6 +9,7 @@ import java.util.Set;
 import editor.fieldregistry.EditableField;
 import editor.fieldregistry.EditableFieldRegistry;
 import editor.fieldregistry.FieldInputSyncer;
+import editor.fieldregistry.LabelInputFieldMap;
 import lab.component.EmptyComponent;
 import lab.component.LabComponent;
 import lab.component.geo.Rectangle;
@@ -19,6 +20,7 @@ public class ComponentInspector extends LabComponent {
 
 	private LabComponent target = null;
 	private final List<FieldInputSyncer> fieldInputSyncers = new ArrayList<FieldInputSyncer>();
+	private final LabelInputFieldMap labelInputFieldMap = new LabelInputFieldMap();
 	
 	public ComponentInspector() {
 		super(250, 500);
@@ -38,11 +40,12 @@ public class ComponentInspector extends LabComponent {
 		}
 		
 		fieldInputSyncers.clear();
+		labelInputFieldMap.clear();
 		
-		addEditableFieldInputs(target, this);
+		addEditableFieldInputs(target, this, "");
 	}
 	
-	private void addEditableFieldInputs(final Object target, LabComponent container) {
+	private void addEditableFieldInputs(final Object target, LabComponent container, String idPath) {
 		
 		Label label;
 		
@@ -58,7 +61,7 @@ public class ComponentInspector extends LabComponent {
 				MinimizableComponent c = new MinimizableComponent(field.getName(), container.getWidth(), container.getHeight());
 				container.addChild(c);
 				
-				addEditableFieldInputs(field.getValue(target), c);
+				addEditableFieldInputs(field.getValue(target), c, idPath + "." + field.getName());
 				
 				height += c.getHeight();
 				
@@ -85,6 +88,8 @@ public class ComponentInspector extends LabComponent {
 			rect.setStroke(false);
 			container.addChild(rect);
 			
+			labelInputFieldMap.put(idPath + field.getName(), label, input, field);
+			
 			
 			height += 1 + Math.max(input.getHeight() + input.getOffsetY(), label.getHeight());
 			
@@ -101,10 +106,18 @@ public class ComponentInspector extends LabComponent {
 		container.setHeight(height);
 	}
 	
+	public LabelInputFieldMap getLabelInputMap() {
+		return labelInputFieldMap;
+	}
+	
 	@Override
 	public void update() {
 		for (FieldInputSyncer syncer : fieldInputSyncers) {
 			syncer.sync(true);
+		}
+		
+		if (target != null) {
+			labelInputFieldMap.runModifiers(target);
 		}
 	}
 

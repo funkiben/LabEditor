@@ -2,6 +2,12 @@ package editor.fieldregistry;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
+
+import editor.fieldregistry.modifier.EditableFieldModifier;
+import lab.component.swing.Label;
+import lab.component.swing.input.InputComponent;
 
 public class EditableField {
 
@@ -9,6 +15,7 @@ public class EditableField {
 	private final Method getter;
 	private final Method setter;
 	private final InputComponentInstantiator inputComponentInstantiator;
+	private final List<EditableFieldModifier> modifiers = new ArrayList<EditableFieldModifier>();
 	
 	public EditableField(String name, Method getter, Method setter, InputComponentInstantiator inputComponentInstantiator) {
 		this.name = name;
@@ -23,6 +30,22 @@ public class EditableField {
 	
 	public String getName() {
 		return name;
+	}
+	
+	public void addModifier(EditableFieldModifier...modifiers) {
+		for (EditableFieldModifier modifier : modifiers) {
+			this.modifiers.add(modifier);
+		}
+	}
+	
+	public void clearModifiers() {
+		modifiers.clear();
+	}
+	
+	public void runModifiers(Object object, Label label, InputComponent input, LabelInputFieldMap labelInputFieldMap) {
+		for (EditableFieldModifier modifier : modifiers) {
+			modifier.run(this, object, label, input, labelInputFieldMap);
+		}
 	}
 	
 	public Object getValue(Object c) {

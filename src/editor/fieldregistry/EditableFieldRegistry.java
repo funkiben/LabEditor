@@ -4,13 +4,19 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import editor.fieldregistry.modifier.AliasModifier;
+import editor.fieldregistry.modifier.EditableFieldModifier;
+import static editor.fieldregistry.modifier.EditableFieldModifier.*;
+import static editor.fieldregistry.modifier.condition.ModifierCondition.*;
 import lab.component.GraduatedComponent;
 import lab.component.LabComponent;
+import lab.component.MeasurableComponent;
 import lab.component.container.Bulb;
 import lab.component.container.Container;
 import lab.component.container.ContentState;
@@ -40,7 +46,7 @@ import static editor.fieldregistry.InputComponentInstantiator.*;
 
 public class EditableFieldRegistry {
 
-	private static final Map<Class<?>, List<EditableField>> registry = new HashMap<Class<?>, List<EditableField>>();
+	private static final Map<Class<?>, Map<String,EditableField>> registry = new HashMap<Class<?>, Map<String,EditableField>>();
 	private static final Map<Class<?>, List<String>> hiddenFields = new HashMap<Class<?>, List<String>>();
 	
 	private static Class<?> currentClass = null;
@@ -55,18 +61,22 @@ public class EditableFieldRegistry {
 		registerField("getHeight", "setHeight", "Height", integerField(1, 9999));
 		registerField("isVisible", "setVisible", "Visible", checkBox());
 		
+		currentClass = MeasurableComponent.class;
+		registerField("getValue", "setValue", "Value", doubleField(0, 9999999, 5, 5));
+		addModifier("Value", alias(Thermometer.class, "Temperature"), 
+							 alias(Manometer.class, "Pressure"), 
+							 alias(Piston.class, "Volume"),
+							 alias(Container.class, "Liquid Volume", inputValueCondition("Content State", ContentState.LIQUID)),
+							 alias(Container.class, "Solid Size", inputValueCondition("Content State", ContentState.SOLID)),
+							 alias(Container.class, "Gas Transparency", inputValueCondition("Content State", ContentState.GAS)));
+		
 		registerField(GraduatedComponent.class, "getGraduation", "Graduation");
 		
-		registerField(Manometer.class, "getValue", "setValue", "Pressure", doubleField(0, 9999999, 5, 5));
-		
-		currentClass = Thermometer.class;
-		registerField("getValue", "setValue", "Temperature", doubleField(0, 999999, 5, 5));
-		hideField("Width");
+		hideField(Thermometer.class, "Width");
 		
 		currentClass = Container.class;
 		registerField("getContentColor", "setContentColor", "Content Color", changeColorButton());
 		registerField("getContentState", "setContentState", "Content State", dropdown(ContentState.GAS, ContentState.LIQUID, ContentState.SOLID));
-		registerField("getValue", "setValue", "Content Amount", doubleField(0, 999999, 5, 5));
 		
 		currentClass = Graduation.class;
 		registerField("getStart", "setStart", "Start", doubleField(5, 5));
@@ -74,8 +84,10 @@ public class EditableFieldRegistry {
 		registerField("getLineIntervals", "setLineIntervals", "Tick Intervals", doubleField(0, 999999, 3, 5));
 		registerField("getSubLineIntervals", "setSubLineIntervals", "Subtick Intervals", doubleField(0, 999999, 3, 5));
 		registerField("getSuffix", "setSuffix", "Units", textField(""));
-		registerField(Piston.class, "getGasColor", "setGasColor", "Gas Color", changeColorButton());
-
+		
+		currentClass = Piston.class;
+		registerField("getGasColor", "setGasColor", "Gas Color", changeColorButton());
+		
 		registerField(BunsenBurner.class, "getFlame", "Flame");
 
 		currentClass = Flame.class;
@@ -88,8 +100,6 @@ public class EditableFieldRegistry {
 		hideField("X", "Y", "Z", "Width", "Height");
 		
 		hideField(Bulb.class, "Graduation");
-		
-		registerField(Piston.class, "getValue", "setValue", "Volume", doubleField(0, 999999, 5, 5));
 		
 		registerField(SwingComponent.class, "isEnabled", "setEnabled", "Enabled", checkBox());
 		
@@ -212,7 +222,17 @@ public class EditableFieldRegistry {
 		
 		hiddenFields.put(clazz, list);
 	}
-
+	
+	private static void addModifier(Class<?> clazz, String fieldName, EditableFieldModifier...modifiers) {
+		EditableField field = registry.get(clazz).get(fieldName);
+		
+		field.addModifier(modifiers);
+	}
+	
+	private static void addModifier(String fieldName, EditableFieldModifier...modifiers) {
+		addModifier(currentClass, fieldName, modifiers);
+	}
+	
 	private static void registerField(String getter, String setter, String name, InputComponentInstantiator inputComponentInstantiator) {
 		registerField(getter, setter, name, inputComponentInstantiator, null);
 	}
@@ -261,20 +281,20 @@ public class EditableFieldRegistry {
 
 		}
 
-		List<EditableField> fields;
+		Map<String,EditableField> fields;
 
 		EditableField editableField = new EditableField(name, getterMethod, setterMethod, inputComponentInstantiator);
 
 		if (registry.containsKey(clazz)) {
 
 			fields = registry.get(clazz);
-			fields.add(editableField);
+			fields.put(editableField.getName(), editableField);
 
 		} else {
 
-			fields = new ArrayList<EditableField>();
+			fields = new LinkedHashMap<String,EditableField>();
 
-			fields.add(editableField);
+			fields.put(editableField.getName(), editableField);
 
 			registry.put(clazz, fields);
 
@@ -304,7 +324,7 @@ public class EditableFieldRegistry {
 		}
 		
 		if (registry.containsKey(c)) {
-			editableFields.addAll(registry.get(c));
+			editableFields.addAll(registry.get(c).values());
 		}
 		
 		removeHiddenFields(editableFields, c);
