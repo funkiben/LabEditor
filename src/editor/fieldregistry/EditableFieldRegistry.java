@@ -9,16 +9,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import lab.component.BunsenBurner;
 import lab.component.GraduatedComponent;
 import lab.component.LabComponent;
-import lab.component.Piston;
 import lab.component.container.Bulb;
 import lab.component.container.Container;
 import lab.component.container.ContentState;
 import lab.component.fx.Flame;
 import lab.component.geo.GeoComponent;
 import lab.component.geo.Line;
+import lab.component.misc.BunsenBurner;
+import lab.component.misc.Piston;
 import lab.component.sensor.Manometer;
 import lab.component.sensor.Thermometer;
 import lab.component.swing.Label;

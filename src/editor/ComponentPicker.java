@@ -5,9 +5,7 @@ import java.awt.Graphics;
 import java.util.HashMap;
 import java.util.Map;
 
-import lab.component.BunsenBurner;
 import lab.component.LabComponent;
-import lab.component.Piston;
 import lab.component.container.Beaker;
 import lab.component.container.Bulb;
 import lab.component.container.Flask;
@@ -15,6 +13,8 @@ import lab.component.container.GraduatedCylinder;
 import lab.component.data.Graph;
 import lab.component.fx.Flame;
 import lab.component.fx.ParticleSystem;
+import lab.component.misc.BunsenBurner;
+import lab.component.misc.Piston;
 import lab.component.sensor.Manometer;
 import lab.component.sensor.Thermometer;
 import lab.component.swing.Label;
