@@ -17,7 +17,6 @@ import javax.swing.JScrollBar;
 
 import lab.component.swing.input.Button;
 import lab.component.swing.input.InputComponent;
-import lab.component.swing.input.TextField;
 
 public abstract class MutableList<E> extends InputComponent {
 
@@ -28,7 +27,6 @@ public abstract class MutableList<E> extends InputComponent {
 	}
 	
 	private final MultiSelectionList<E> itemList;
-	protected final TextField entryField = createEntryField();
 	private final Button addButton;
 	private final JPopupMenu deleteMenu = new JPopupMenu("Delete");
 	
@@ -40,11 +38,10 @@ public abstract class MutableList<E> extends InputComponent {
 		itemList.getJList().addMouseListener(new ListMouseListener());
 		
 		addButton = new Button(60, 25, "Add") {
-			@SuppressWarnings("unchecked")
 			@Override
 			public void doSomething() {
-				itemList.add((E) entryField.getValue());
-				entryField.getJComponent().setText("");
+				itemList.add(getEntry());
+				clearEntry();
 				addButton.setEnabled(false);
 				
 				JScrollBar scrollBar = itemList.getJComponent().getVerticalScrollBar();
@@ -55,19 +52,16 @@ public abstract class MutableList<E> extends InputComponent {
 		
 		addButton.setEnabled(false);
 
-		entryField.setWidth(width - 60);
-		entryField.getJComponent().setText("");
-		entryField.getJComponent().addKeyListener(new EntryFieldKeyListener());
 		
-		addChild(itemList, addButton, entryField);
+		addChild(itemList, addButton);
 		
 		
 		JMenuItem deleteMenuItem = new JMenuItem("Delete");
 		
 		deleteMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
-				for (E e : itemList.getSelectedValues()) {
-					itemList.remove(e);
+				for (int i : itemList.getSelectedIndices()) {
+					itemList.remove(i);
 				}
 			}
 		});
@@ -141,16 +135,14 @@ public abstract class MutableList<E> extends InputComponent {
 	public Button getAddButton() {
 		return addButton;
 	}
-	
-	public TextField getEntryField() {
-		return entryField;
-	}
 
-	public abstract TextField createEntryField();
+	public abstract E getEntry();
+	public abstract void clearEntry();
+	public abstract boolean entryHasFocus();
 	
 	@Override
 	public void update() {
-		addButton.setEnabled(entryField.hasInput());
+		addButton.setEnabled(getEntry() != null);
 	}
 	
 	@Override
@@ -160,7 +152,7 @@ public abstract class MutableList<E> extends InputComponent {
 	
 	@Override
 	public boolean hasFocus() {
-		return itemList.hasFocus() || addButton.hasFocus() || entryField.hasFocus();
+		return itemList.hasFocus() || addButton.hasFocus() || entryHasFocus();
 	}
 
 	class EntryFieldKeyListener implements KeyListener {
