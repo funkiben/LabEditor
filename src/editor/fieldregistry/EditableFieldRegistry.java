@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import editor.fieldregistry.modifier.AliasModifier;
 import editor.fieldregistry.modifier.EditableFieldModifier;
 import static editor.fieldregistry.modifier.EditableFieldModifier.*;
 import static editor.fieldregistry.modifier.condition.ModifierCondition.*;
