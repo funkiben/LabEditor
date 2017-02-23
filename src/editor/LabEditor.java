@@ -59,7 +59,7 @@ public class LabEditor extends LabFrame {
 		testWindow.setOffsetY(45);
 		testWindow.setResizable(false);
 		
-		LabComponent target = new ParticleSystem(300, 300, 1000);
+		LabComponent target = new Flask(300, 300);
 		
 		inspector.setTarget(target);
 		
