@@ -11,7 +11,6 @@ import java.util.Set;
 
 import lab.component.BunsenBurner;
 import lab.component.GraduatedComponent;
-import lab.component.Graduation;
 import lab.component.LabComponent;
 import lab.component.Piston;
 import lab.component.container.Bulb;
@@ -35,6 +34,7 @@ import lab.component.swing.input.IntegerSlider;
 import lab.component.swing.input.LabeledDoubleSlider;
 import lab.component.swing.input.LabeledIntegerSlider;
 import lab.component.swing.input.TextField;
+import lab.util.Graduation;
 
 import static editor.fieldregistry.InputComponentInstantiator.*;
 

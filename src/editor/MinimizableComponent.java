@@ -9,9 +9,9 @@ import javax.swing.JPanel;
 
 import draw.animation.Animator;
 import draw.animation.DoubleLinearAnimation;
-import lab.component.ClickableArea;
 import lab.component.EmptyComponent;
 import lab.component.LabComponent;
+import lab.util.ClickableArea;
 
 public class MinimizableComponent extends LabComponent {
 

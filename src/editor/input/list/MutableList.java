@@ -3,10 +3,10 @@ package editor.input.list;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.Arrays;
 import java.util.List;
 
@@ -155,26 +155,16 @@ public abstract class MutableList<E> extends InputComponent {
 		return itemList.hasFocus() || addButton.hasFocus() || entryHasFocus();
 	}
 
-	class EntryFieldKeyListener implements KeyListener {
+	class EntryFieldKeyListener extends KeyAdapter {
 		@Override
 		public void keyPressed(KeyEvent e) {
 			if (e.getKeyCode() == KeyEvent.VK_ENTER && addButton.isEnabled()) {
 				addButton.doSomething();
 			}
 		}
-	
-		@Override
-		public void keyReleased(KeyEvent e) {
-			
-		}
-		
-		@Override
-		public void keyTyped(KeyEvent e) {
-			
-		}
 	}
 	
-	class ListKeyListener implements KeyListener {
+	class ListKeyListener extends KeyAdapter {
 		@Override
 		public void keyPressed(KeyEvent ev) {
 			if (ev.getKeyCode() == KeyEvent.VK_DELETE) {
@@ -183,25 +173,9 @@ public abstract class MutableList<E> extends InputComponent {
 				}
 			}
 		}
-	
-		@Override
-		public void keyReleased(KeyEvent e) {
-			
-		}
-		
-		@Override
-		public void keyTyped(KeyEvent e) {
-			
-		}
 	}
 	
-	class ListMouseListener implements MouseListener {
-
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			
-		}
-
+	class ListMouseListener extends MouseAdapter {
 		@Override
 		public void mousePressed(MouseEvent e) {
 			if (e.isPopupTrigger()) {
@@ -214,21 +188,6 @@ public abstract class MutableList<E> extends InputComponent {
 				
 				deleteMenu.show(e.getComponent(), e.getX(), e.getY());
 			}
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			
 		}
 		
 	}

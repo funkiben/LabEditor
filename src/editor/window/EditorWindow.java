@@ -7,10 +7,10 @@ import java.awt.Point;
 
 import javax.swing.JPanel;
 
-import lab.component.ClickableArea;
 import lab.component.EmptyComponent;
 import lab.component.LabComponent;
 import lab.component.swing.input.Button;
+import lab.util.ClickableArea;
 
 public class EditorWindow extends LabComponent {
 
@@ -127,23 +127,23 @@ public class EditorWindow extends LabComponent {
 			
 			Point newOffset = new Point();
 			newOffset.x = dragBarDragArea.getMousePosition().x + dragBarDragArea.getClickRelativeToPosition().x;
-			newOffset.y = dragBarDragArea.getMousePosition().y + dragBarDragArea.getClickRelativeToPosition().y
-					+ DRAG_BAR_HEIGHT;
+			newOffset.y = dragBarDragArea.getMousePosition().y + dragBarDragArea.getClickRelativeToPosition().y + DRAG_BAR_HEIGHT;
 
 			if (newOffset.x != getOffsetX() || newOffset.y != getOffsetY()) {
 				setOffsetX(newOffset.x);
 				setOffsetY(newOffset.y);
 			}
 
-			if(newOffset.x <=0 ) {
+			if (newOffset.x <= 0) {
 				setOffsetX(0);
-			}else if(newOffset.x + width >= getRoot().getLastDrawWidth()) {
-				setOffsetX(getRoot().getLastDrawWidth()-width);
+			} else if (newOffset.x + width >= getRoot().getLastDrawWidth()) {
+				setOffsetX(getRoot().getLastDrawWidth() - width);
 			}
-			if(newOffset.y <=45 ) {
+			
+			if (newOffset.y <= 45) {
 				setOffsetY(45);
-			}else if(newOffset.y + height >= getRoot().getLastDrawHeight()) {
-				setOffsetY(getRoot().getLastDrawHeight()-height);
+			} else if (newOffset.y + height >= getRoot().getLastDrawHeight()) {
+				setOffsetY(getRoot().getLastDrawHeight() - height);
 			}
 
 		}

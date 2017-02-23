@@ -4,7 +4,6 @@ import editor.window.EditorWindow;
 import lab.LabFrame;
 import lab.component.LabComponent;
 import lab.component.Piston;
-import lab.component.container.Flask;
 
 public class LabEditor extends LabFrame {
 

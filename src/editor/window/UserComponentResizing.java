@@ -5,8 +5,8 @@ import java.awt.Point;
 
 import javax.swing.JPanel;
 
-import lab.component.ClickableArea;
 import lab.component.LabComponent;
+import lab.util.ClickableArea;
 
 
 // this entire class is really messy :(
