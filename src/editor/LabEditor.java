@@ -4,6 +4,7 @@ import editor.window.EditorWindow;
 import lab.LabFrame;
 import lab.component.LabComponent;
 import lab.component.container.Flask;
+import lab.component.fx.ParticleSystem;
 
 public class LabEditor extends LabFrame {
 
@@ -58,7 +59,7 @@ public class LabEditor extends LabFrame {
 		testWindow.setOffsetY(45);
 		testWindow.setResizable(false);
 		
-		LabComponent target = new Flask(200, 300);
+		LabComponent target = new ParticleSystem(300, 300, 1000);
 		
 		inspector.setTarget(target);
 		

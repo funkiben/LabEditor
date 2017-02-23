@@ -20,6 +20,12 @@ import lab.component.container.Bulb;
 import lab.component.container.Container;
 import lab.component.container.ContentState;
 import lab.component.fx.Flame;
+import lab.component.fx.ParticleShape;
+import lab.component.fx.ParticleSystem;
+import lab.component.fx.RandomColorGenerator;
+import lab.component.fx.RandomDoubleGenerator;
+import lab.component.fx.RandomVector2Generator;
+import lab.component.fx.Vector2DistributionType;
 import lab.component.geo.GeoComponent;
 import lab.component.geo.Line;
 import lab.component.misc.BunsenBurner;
@@ -34,12 +40,14 @@ import lab.component.swing.input.DoubleField;
 import lab.component.swing.input.DoubleSlider;
 import lab.component.swing.input.Dropdown;
 import lab.component.swing.input.FontStyle;
+import lab.component.swing.input.InputComponent;
 import lab.component.swing.input.IntegerField;
 import lab.component.swing.input.IntegerSlider;
 import lab.component.swing.input.LabeledDoubleSlider;
 import lab.component.swing.input.LabeledIntegerSlider;
 import lab.component.swing.input.TextField;
 import lab.util.Graduation;
+import lab.util.Vector2;
 
 import static editor.fieldregistry.InputComponentInstantiator.*;
 
@@ -68,6 +76,33 @@ public class EditableFieldRegistry {
 							 alias(Container.class, "Liquid Volume", inputValueCondition("Content State", ContentState.LIQUID)),
 							 alias(Container.class, "Solid Size", inputValueCondition("Content State", ContentState.SOLID)),
 							 alias(Container.class, "Gas Transparency", inputValueCondition("Content State", ContentState.GAS)));
+		
+		addModifier("Value", new EditableFieldModifier() {
+			@Override
+			public void run(EditableField field, Object object, Label label, InputComponent input, LabelInputFieldMap labelInputFieldMap) {
+				DoubleField doubleField = (DoubleField) input;
+				
+				if (object instanceof Container) {
+					
+					if (((Container) object).getContentState() == ContentState.LIQUID) {
+						doubleField.setMin(((GraduatedComponent) object).getGraduation().getStart());
+						doubleField.setMax(((GraduatedComponent) object).getGraduation().getEnd());
+						return;
+					}
+					
+				} else if (object instanceof GraduatedComponent) {
+					
+					doubleField.setMin(((GraduatedComponent) object).getGraduation().getStart());
+					doubleField.setMax(((GraduatedComponent) object).getGraduation().getEnd());
+					return;
+					
+				}
+				
+				doubleField.setMin(0);
+				doubleField.setMax(9999999);
+				
+			}
+		});
 		
 		registerField(GraduatedComponent.class, "getGraduation", "Graduation");
 		
@@ -163,9 +198,8 @@ public class EditableFieldRegistry {
 		registerField("getColor", "setColor", "Color", changeColorButton());
 		hideField("X", "Y", "Width", "Height");
 		
-		// ParticleSystem registry below
 		
-		/*
+		// ParticleSystem registry below
 		currentClass = Vector2.class;
 		registerField("getX", "setX", "X", doubleField(5, 5));
 		registerField("getY", "setY", "Y", doubleField(5, 5));
@@ -188,6 +222,7 @@ public class EditableFieldRegistry {
 		registerField("getBlueEnd", "setBlueEnd", "B Max", integerField(0, 255));
 		
 		currentClass = ParticleSystem.class;
+		registerField("isOn", "setOn", "On", checkBox());
 		registerField("getParticleSpawnRate", "setParticleSpawnRate", "Spawn Rate", doubleField(0, 99999));
 		registerField("getSpawnArea", "Spawn");
 		registerField("getVelocity", "Velocity");
@@ -201,7 +236,7 @@ public class EditableFieldRegistry {
 		registerField("getColor", "Color Fade");
 		registerField("getLifetime", "Life");
 		registerField("getShape", "setShape", "Particle Shape", dropdown(ParticleShape.ELLIPSE, ParticleShape.RECTANGLE));
-		*/
+		
 	}
 
 	private static void hideField(String... names) {
