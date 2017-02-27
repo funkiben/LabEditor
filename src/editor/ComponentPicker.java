@@ -1,15 +1,16 @@
 package editor;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.util.HashMap;
 import java.util.Map;
 
-import lab.component.LabComponent;
 import lab.component.container.Beaker;
 import lab.component.container.Bulb;
 import lab.component.container.Flask;
 import lab.component.container.GraduatedCylinder;
+import lab.component.data.DataTable;
 import lab.component.data.Graph;
 import lab.component.fx.Flame;
 import lab.component.fx.ParticleSystem;
@@ -19,10 +20,10 @@ import lab.component.sensor.Manometer;
 import lab.component.sensor.Thermometer;
 import lab.component.swing.Label;
 import lab.component.swing.input.Button;
-import lab.component.swing.input.Dropdown;
 import lab.component.swing.input.DoubleField;
 import lab.component.swing.input.DoubleSlider;
 import lab.component.swing.input.Switch;
+import lab.component.swing.input.TextField;
 
 public class ComponentPicker extends LabComponent {
 
@@ -40,52 +41,66 @@ public class ComponentPicker extends LabComponent {
 		componentNameAliases.put(ParticleSystem.class, "Particles");
 		componentNameAliases.put(DoubleField.class, "Text Field");
 	}
-
+	
 	public ComponentPicker(int width, int height) {
 		super(width, height);
 
+		
+		
 		Label header = new Label(100000, 20, "Pick Components: ");
+		header.setFont(new Font("default",Font.BOLD,18));
+		
+		final int inputHeight = 30;
+		final int inputWidth = 150;
+		
+		MinimizableComponent inputs = new MinimizableComponent("User Input",300,inputHeight*12,30);
+		inputs.addChild(new Button(150, inputHeight, "Button") {
 
-		Label inputHeader = new Label(100000, 20, "User Input");
-		Dropdown inputMenu = new Dropdown(150, 30, "Button", "Checkbox", "Dropdown Menu", "Slider",
-				"Slider (labeled)", "Text Box", "Text Box (numbers only)", "Switch");
-		Button addInput = new Button(120, 30, "Add Input") {
-			@Override
-			public void doSomething() {
-				// TODO Auto-generated method stub
-			}
-		};
 
-		Label containerHeader = new Label(100000, 20, "Containers");
-		Dropdown containerMenu = new Dropdown(150, 30, "Beaker", "Bulb", "Flask", "Graduated Cylinder");
-		Button addContainer = new Button(120, 30, "Add Container") {
 			@Override
 			public void doSomething() {
 				// TODO Auto-generated method stub
 				
 			}
-		};
 
-		Label equipmentHeader = new Label(100000, 20, "Lab Equipment");
-		Dropdown equipmentMenu = new Dropdown(150, 30, "Bunsen Burner", "Piston");
-		Button addEquipment = new Button(120, 30, "Add Equipment") {
-			@Override
-			public void doSomething() {
-				// TODO Auto-generated method stub
-
-			}
-		};
-
-		Label sensorHeader = new Label(100000, 20, "Sensors");
-		Dropdown sensorMenu = new Dropdown(150, 30, "Thermometer", "Manometer");
-		Button addSensor = new Button(120, 30, "Add Sensor") {
-			@Override
-			public void doSomething() {
-				// TODO Auto-generated method stub
-
-			}
-		};
-
+		}, 
+				new CheckBox(inputWidth,inputHeight,"Check Box"), 
+				new DropdownMenu(inputWidth,inputHeight,"Dropdown Menu Item 1","Dropdown Menu Item 2","Dropdown Menu Item 3","Dropdown Menu Item 4","Dropdown Menu Item 5","Dropdown Menu Item 6"), 
+				new LabeledSlider(inputWidth,inputHeight,0,100,.5f,2,0), 
+				new TextField(inputWidth,(int) ((inputHeight/1.75)+.5),"Text Field"), 
+				new NumberField(inputWidth,inputHeight*4,2,1)
+		);
+		inputs.setMinimized(true);
+		
+		MinimizableComponent containers = new MinimizableComponent("Containers",300,500,30);
+		containers.addChild(
+				new Beaker(50,100),
+				new Bulb(100,100),
+				new Flask(100,100),
+				new GraduatedCylinder(50,200)
+		);
+		containers.setMinimized(true);
+		
+		MinimizableComponent equipment = new MinimizableComponent("Lab Equipment",300,400,30);
+		equipment.addChild(new BunsenBurner(50,200), new Piston(100,200));
+		equipment.setMinimized(true);
+		
+		MinimizableComponent sensors = new MinimizableComponent("Sensors",300,400,30);
+		sensors.addChild(
+				new Thermometer(200),
+				new Manometer(200,300)
+		);
+		sensors.setMinimized(true);
+		DataTable<Double> tempDataTable = new DataTable<Double>(200,200,20,20,DataTable.ROW_AND_COLUMN_TITLES);
+		tempDataTable.setOffset(30, 30);
+		MinimizableComponent analysis = new MinimizableComponent("Analytics",300,300,30);
+		analysis.addChild(
+				new Graph(200,200,"Graph","X axis","Y axis", new VerticalGraduation(0,100,10,5),new HorizontalGraduation(0,100,10,5)),
+				
+				tempDataTable
+		);
+		analysis.setMinimized(true);
+		/*
 		Label analysisHeader = new Label(100000, 20, "Analytics");
 		Dropdown analysisMenu = new Dropdown(150, 30, "Graph", "Data Table");
 		Button addAnalysis = new Button(120, 30, "Add Analytics") {
@@ -95,9 +110,15 @@ public class ComponentPicker extends LabComponent {
 
 			}
 		};
-
+		*/
+		
 		addChild(header);
-
+		addChild(inputs);
+		addChild(containers);
+		addChild(equipment);
+		addChild(sensors);
+		addChild(analysis);
+		/*
 		addChild(inputHeader);
 		addChild(inputMenu);
 		addChild(addInput);
@@ -117,6 +138,7 @@ public class ComponentPicker extends LabComponent {
 		addChild(analysisHeader);
 		addChild(analysisMenu);
 		addChild(addAnalysis);
+		*/
 
 		/*
 		 * for (Class<? extends LabComponent> component : components) {
@@ -153,7 +175,7 @@ public class ComponentPicker extends LabComponent {
 
 		return component.getSimpleName().replaceAll("Component", "");
 	}
-
+	
 	@Override
 	public void draw(int x, int y, int width, int height, Graphics g) {
 		g.setColor(Color.black);

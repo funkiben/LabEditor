@@ -73,6 +73,15 @@ public class MenuBarComponent extends SwingComponent {
 		});
 		componentPicker.setSelected(true);
 		labOptions = new JRadioButtonMenuItem("Lab Options");
+		labOptions.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				labOptionsMethod();
+			}
+			
+		});
+		labOptions.setSelected(false);
 		substanceWindow = new JRadioButtonMenuItem("Substance Options");
 		windowMenu.add(componentPicker);
 		windowMenu.add(labOptions);
@@ -192,6 +201,10 @@ public class MenuBarComponent extends SwingComponent {
 
 	public void componentPickerMethod() {
 		
-	};
+	}
+	
+	public void labOptionsMethod() {
+		
+	}
 
 }
