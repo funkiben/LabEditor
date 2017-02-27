@@ -15,11 +15,11 @@ public class LabEditor extends LabFrame {
 
 		getRoot().setScaleChildren(false);
 		getRoot().setLayout(LabComponent.FREE_FORM);
-		componentWindow = new EditorWindow("Component Picker", 300, 500);
-		componentWindow.getContent().addChild(new ComponentPicker(300, 500));
+		componentWindow = new EditorWindow("Component Picker", 300, 700);
+		componentWindow.getContent().addChild(new ComponentPicker(300, 700));
 		componentWindow.setOffsetY(45);
 		componentWindow.setMinWidth(300);
-		componentWindow.setMinHeight(500);
+		componentWindow.setMinHeight(700);
 		
 		labWindow = new EditorWindow("Lab Options", 300, 500);
 		labWindow.getContent().addChild(new LabOptions(300,500));
