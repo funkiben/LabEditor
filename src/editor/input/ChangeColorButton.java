@@ -32,7 +32,7 @@ public class ChangeColorButton extends Button implements ChangeListener {
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		colorSampleRect = new Rectangle(height - 4, height - 4);
-		colorSampleRect.setOffset(-height + 4, 2);
+		colorSampleRect.setOffset(-height - 3, 2);
 		colorSampleRect.setStrokeColor(Color.black);
 		addChild(colorSampleRect);
 		
@@ -40,6 +40,11 @@ public class ChangeColorButton extends Button implements ChangeListener {
 	
 	public Color getColor() {
 		return color;
+	}
+	
+	@Override
+	public void setOffsetX(int offsetX) {
+		super.setOffsetX(getHeight() + offsetX);
 	}
 	
 	@Override

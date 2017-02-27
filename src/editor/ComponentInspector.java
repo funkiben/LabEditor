@@ -58,7 +58,8 @@ public class ComponentInspector extends LabComponent {
 		for (EditableField field : fields) {
 			if (field.getInputComponentInstantiator() == null) {
 				
-				MinimizableComponent c = new MinimizableComponent(field.getName(), container.getWidth(), container.getHeight());
+				MinimizableComponent c = new MinimizableComponent(field.getName(), container.getWidth() - 1, container.getHeight());
+				c.setOffsetX(1);
 				container.addChild(c);
 				
 				addEditableFieldInputs(field.getValue(target), c, idPath + "." + field.getName());
@@ -71,6 +72,7 @@ public class ComponentInspector extends LabComponent {
 			input = field.getInputComponentInstantiator().create();
 			
 			input.setValue(field.getValue(target));
+			input.setOffsetX(5);
 			
 			fieldInputSyncers.add(new FieldInputSyncer(target, input, field));
 			

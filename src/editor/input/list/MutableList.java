@@ -37,7 +37,7 @@ public abstract class MutableList<E> extends InputComponent {
 		itemList.getJList().addKeyListener(new ListKeyListener());
 		itemList.getJList().addMouseListener(new ListMouseListener());
 		
-		addButton = new Button(60, 25, "Add") {
+		addButton = new Button(60, 20, "Add") {
 			@Override
 			public void doSomething() {
 				itemList.add(getEntry());
