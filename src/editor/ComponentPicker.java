@@ -6,12 +6,6 @@ import java.awt.Graphics;
 import java.util.HashMap;
 import java.util.Map;
 
-import lab.component.BunsenBurner;
-import lab.component.HorizontalGraduation;
-import lab.component.LabComponent;
-import lab.component.MinimizableComponent;
-import lab.component.Piston;
-import lab.component.VerticalGraduation;
 import lab.component.container.Beaker;
 import lab.component.container.Bulb;
 import lab.component.container.Flask;
@@ -20,20 +14,14 @@ import lab.component.data.DataTable;
 import lab.component.data.Graph;
 import lab.component.fx.Flame;
 import lab.component.fx.ParticleSystem;
+import lab.component.misc.BunsenBurner;
+import lab.component.misc.Piston;
 import lab.component.sensor.Manometer;
 import lab.component.sensor.Thermometer;
 import lab.component.swing.Label;
 import lab.component.swing.input.Button;
-import lab.component.swing.input.CheckBox;
-import lab.component.swing.input.DropdownMenu;
-<<<<<<< HEAD
-import lab.component.swing.input.LabeledSlider;
-import lab.component.swing.input.NumberField;
-import lab.component.swing.input.Slider;
-=======
 import lab.component.swing.input.DoubleField;
 import lab.component.swing.input.DoubleSlider;
->>>>>>> refs/remotes/origin/master
 import lab.component.swing.input.Switch;
 import lab.component.swing.input.TextField;
 
@@ -42,7 +30,7 @@ public class ComponentPicker extends LabComponent {
 	@SuppressWarnings("unchecked")
 	private static final Class<? extends LabComponent>[] components = new Class[] { BunsenBurner.class, Piston.class,
 			Beaker.class, Bulb.class, Flask.class, GraduatedCylinder.class, ParticleSystem.class, Manometer.class,
-			Thermometer.class, Flame.class, Graph.class, Button.class, DropdownMenu.class, Label.class, DoubleSlider.class,
+			Thermometer.class, Flame.class, Graph.class, Button.class, Dropdown.class, Label.class, DoubleSlider.class,
 			Switch.class, DoubleField.class };
 
 	private static final Map<Class<? extends LabComponent>, String> componentNameAliases = new HashMap<Class<? extends LabComponent>, String>();
@@ -68,11 +56,13 @@ public class ComponentPicker extends LabComponent {
 		MinimizableComponent inputs = new MinimizableComponent("User Input",300,inputHeight*12,30);
 		inputs.addChild(new Button(150, inputHeight, "Button") {
 
+
 			@Override
 			public void doSomething() {
 				// TODO Auto-generated method stub
 				
 			}
+
 		}, 
 				new CheckBox(inputWidth,inputHeight,"Check Box"), 
 				new DropdownMenu(inputWidth,inputHeight,"Dropdown Menu Item 1","Dropdown Menu Item 2","Dropdown Menu Item 3","Dropdown Menu Item 4","Dropdown Menu Item 5","Dropdown Menu Item 6"), 
@@ -112,7 +102,7 @@ public class ComponentPicker extends LabComponent {
 		analysis.setMinimized(true);
 		/*
 		Label analysisHeader = new Label(100000, 20, "Analytics");
-		DropdownMenu analysisMenu = new DropdownMenu(150, 30, "Graph", "Data Table");
+		Dropdown analysisMenu = new Dropdown(150, 30, "Graph", "Data Table");
 		Button addAnalysis = new Button(120, 30, "Add Analytics") {
 			@Override
 			public void doSomething() {

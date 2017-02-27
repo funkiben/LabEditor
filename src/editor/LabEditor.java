@@ -1,8 +1,10 @@
 package editor;
 
+import editor.window.EditorWindow;
 import lab.LabFrame;
-import lab.component.BunsenBurner;
 import lab.component.LabComponent;
+import lab.component.container.Flask;
+import lab.component.fx.ParticleSystem;
 
 public class LabEditor extends LabFrame {
 
@@ -86,26 +88,31 @@ public class LabEditor extends LabFrame {
 		addComponent(testWindow);
 		*/
 		
-		testWindow = new EditorWindow("TestWindow", 300, 500);
+		testWindow = new EditorWindow("TestWindow", 250, 500);
 		testWindow.getContent().setScaleChildren(false);
 		
-		ComponentInspector inspector = new ComponentInspector(300, 500);
+		ComponentInspector inspector = new ComponentInspector();
 		
 		testWindow.getContent().addChild(inspector);
 		testWindow.setOffsetY(45);
-		testWindow.setMinWidth(300);
-		testWindow.setMinHeight(500);
+		testWindow.setResizable(false);
 		
-		LabComponent target = new BunsenBurner(30, 350);
+		LabComponent target = new Flask(300, 300);
 		
 		inspector.setTarget(target);
+		
+		testWindow.setWidth(inspector.getWidth());
+		testWindow.setHeight(inspector.getHeight());
+		
+		testWindow.setOffsetX(400);
 		
 		addComponent(testWindow);
 		addComponent(target);
 		
 >>>>>>> refs/remotes/origin/master
 		start(60);
-
+	
+		
 	}
 
 	@Override

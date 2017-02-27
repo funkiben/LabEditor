@@ -1,5 +1,6 @@
 package editor;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,20 +8,22 @@ import java.util.Set;
 
 import editor.fieldregistry.EditableField;
 import editor.fieldregistry.EditableFieldRegistry;
-import editor.fieldregistry.InputWatcher;
+import editor.fieldregistry.FieldInputSyncer;
+import editor.fieldregistry.LabelInputFieldMap;
 import lab.component.EmptyComponent;
 import lab.component.LabComponent;
-import lab.component.MinimizableComponent;
+import lab.component.geo.Rectangle;
 import lab.component.swing.Label;
 import lab.component.swing.input.InputComponent;
 
 public class ComponentInspector extends LabComponent {
 
 	private LabComponent target = null;
-	private final List<InputWatcher> inputWatchers = new ArrayList<InputWatcher>();
+	private final List<FieldInputSyncer> fieldInputSyncers = new ArrayList<FieldInputSyncer>();
+	private final LabelInputFieldMap labelInputFieldMap = new LabelInputFieldMap();
 	
-	public ComponentInspector(int width, int height) {
-		super(width, height);
+	public ComponentInspector() {
+		super(250, 500);
 		
 		setScaleChildren(false);
 	}
@@ -36,12 +39,13 @@ public class ComponentInspector extends LabComponent {
 			this.removeChild(c);
 		}
 		
-		inputWatchers.clear();
+		fieldInputSyncers.clear();
+		labelInputFieldMap.clear();
 		
-		addEditableFieldInputs(target, this, 0);
+		addEditableFieldInputs(target, this, "");
 	}
 	
-	private void addEditableFieldInputs(final Object target, LabComponent container, int offsetX) {
+	private void addEditableFieldInputs(final Object target, LabComponent container, String idPath) {
 		
 		Label label;
 		
@@ -49,63 +53,73 @@ public class ComponentInspector extends LabComponent {
 		
 		InputComponent input;
 		
-		int height = 0;
+		int height = container instanceof MinimizableComponent ? 17 : 0;
 		
 		for (EditableField field : fields) {
-			if (field.getInputComponent() == null) {
+			if (field.getInputComponentInstantiator() == null) {
 				
-				MinimizableComponent c = new MinimizableComponent(field.getName(), 350, 350, 17);
-				c.setOffsetY(5);
-				c.setOffsetX(offsetX + 3);
-				c.setMinimized(false);
-				//c.setScaleChildren(false);
-				
+				MinimizableComponent c = new MinimizableComponent(field.getName(), container.getWidth() - 1, container.getHeight());
+				c.setOffsetX(1);
 				container.addChild(c);
 				
-				addEditableFieldInputs(field.getValue(target), c, offsetX + 5);
+				addEditableFieldInputs(field.getValue(target), c, idPath + "." + field.getName());
 				
 				height += c.getHeight();
 				
 				continue;
 			}
 			
-			try {
-				input = (InputComponent) field.getInputComponent().clone();
-			} catch (CloneNotSupportedException e) {
-				e.printStackTrace();
-				return;
-			}
+			input = field.getInputComponentInstantiator().create();
 			
 			input.setValue(field.getValue(target));
+			input.setOffsetX(5);
 			
-			inputWatchers.add(new InputWatcher(input) {
-				
-				@Override
-				public void onChangeDetected(Object previousValue, Object newValue) {
-					field.setValue(target, newValue);
-				}
-				
-			});
+			fieldInputSyncers.add(new FieldInputSyncer(target, input, field));
 			
 			label = new Label(100, 20, field.getName());
+			label.setWidth(label.getTextWidth());
 			label.setFontSize(12);
-			label.setOffsetX(5 + offsetX);
+			label.setOffsetX(5);
 			container.addChild(label);
+			
 			container.addChild(input);
 			container.addChild(new EmptyComponent(1000000, 0));
 			
-			height += 20;
+			Rectangle rect = new Rectangle(getWidth(), 1);
+			rect.setFillColor(Color.lightGray);
+			rect.setStroke(false);
+			container.addChild(rect);
+			
+			labelInputFieldMap.put(idPath + field.getName(), label, input, field);
+			
+			
+			height += 1 + Math.max(input.getHeight() + input.getOffsetY(), label.getHeight());
 			
 		}
 		
-		container.setHeight(height);
+		if (container instanceof MinimizableComponent) {
+			Rectangle rect = new Rectangle(getWidth(), 3);
+			rect.setFillColor(new Color(230, 230, 230));
+			rect.setStroke(false);
+			container.addChild(rect);
+			height += 3;
+		}
 		
+		container.setHeight(height);
+	}
+	
+	public LabelInputFieldMap getLabelInputMap() {
+		return labelInputFieldMap;
 	}
 	
 	@Override
 	public void update() {
-		for (InputWatcher watcher : inputWatchers) {
-			watcher.check();
+		for (FieldInputSyncer syncer : fieldInputSyncers) {
+			syncer.sync(true);
+		}
+		
+		if (target != null) {
+			labelInputFieldMap.runModifiers(target);
 		}
 	}
 

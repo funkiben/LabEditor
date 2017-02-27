@@ -1,4 +1,4 @@
-package editor;
+package editor.window;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -7,11 +7,10 @@ import java.awt.Point;
 
 import javax.swing.JPanel;
 
-import lab.component.ClickableArea;
 import lab.component.EmptyComponent;
 import lab.component.LabComponent;
-import lab.component.UserComponentResizing;
 import lab.component.swing.input.Button;
+import lab.util.ClickableArea;
 
 public class EditorWindow extends LabComponent {
 
@@ -23,6 +22,7 @@ public class EditorWindow extends LabComponent {
 	private final LabComponent dragBar;
 	private final Button closeButton;
 	private ClickableArea dragBarDragArea;
+	private boolean resizable = true;
 	private final UserComponentResizing resizing = new UserComponentResizing(this, 20, 20);
 
 	public EditorWindow(String name, int width, int height) {
@@ -95,6 +95,14 @@ public class EditorWindow extends LabComponent {
 	public void setMinHeight(int minHeight) {
 		resizing.setMinHeight(minHeight);
 	}
+	
+	public void setResizable(boolean resizable) {
+		this.resizable = resizable;
+	}
+	
+	public boolean isResizable() {
+		return resizable;
+	}
 
 	@Override
 	public void draw(int x, int y, int width, int height, Graphics g) {
@@ -119,28 +127,31 @@ public class EditorWindow extends LabComponent {
 			
 			Point newOffset = new Point();
 			newOffset.x = dragBarDragArea.getMousePosition().x + dragBarDragArea.getClickRelativeToPosition().x;
-			newOffset.y = dragBarDragArea.getMousePosition().y + dragBarDragArea.getClickRelativeToPosition().y
-					+ DRAG_BAR_HEIGHT;
+			newOffset.y = dragBarDragArea.getMousePosition().y + dragBarDragArea.getClickRelativeToPosition().y + DRAG_BAR_HEIGHT;
 
 			if (newOffset.x != getOffsetX() || newOffset.y != getOffsetY()) {
 				setOffsetX(newOffset.x);
 				setOffsetY(newOffset.y);
 			}
 
-			if(newOffset.x <=0 ) {
+			if (newOffset.x <= 0) {
 				setOffsetX(0);
-			}else if(newOffset.x + width >= getRoot().getLastDrawWidth()) {
-				setOffsetX(getRoot().getLastDrawWidth()-width);
+			} else if (newOffset.x + width >= getRoot().getLastDrawWidth()) {
+				setOffsetX(getRoot().getLastDrawWidth() - width);
 			}
-			if(newOffset.y <=45 ) {
+			
+			if (newOffset.y <= 45) {
 				setOffsetY(45);
-			}else if(newOffset.y + height >= getRoot().getLastDrawHeight()) {
-				setOffsetY(getRoot().getLastDrawHeight()-height);
+			} else if (newOffset.y + height >= getRoot().getLastDrawHeight()) {
+				setOffsetY(getRoot().getLastDrawHeight() - height);
 			}
 
 		}
 
-		resizing.check(x, y, width, height);
+		if (resizable) {
+			resizing.check(x, y, width, height);
+		}
+		
 	}
 
 	@Override

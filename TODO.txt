@@ -1,15 +1,17 @@
 1. Drag and drop component feature from Component Picker window to simulation editor window
 
-2. Component inspector window for editing LabComponent fields <- might need to be more than just accessing LabComponent fields (i.e. task 4)
+2. Make EditableFieldRegistry more robust, i.e. special conditions for inputs that might cause inputs to change under certain situations
 
-2.5 Map out all editable fields with appropriate InputComponent
+2.5 Finish adding in rest of LabComponent's to field registry (DataTable, Graph, and ParticleSystem are last ones I think)
 
-3. Way to run the simulation in the editor?
+3. Menu bar for opening different windows, saving, loading, and exporting <- make this functional
 
-4. Some sort of way to link LabComponents together (maybe use QT's single slot method?) <- needs equation support too
+4. Way to run the simulation in the editor?
 
-5. Different tools for editing simulation: move, select, resize
+5. Some sort of way to link LabComponents together (maybe use QT's single slot method?) <- needs equation support too
 
-6. Window snapping like in Eclipse and Unity?
+6. Different tools for editing simulation: move, select, resize
 
-7. Instruction manual!
+7. Window snapping like in Eclipse and Unity?
+
+8. Instruction manual!
