@@ -6,6 +6,9 @@ import java.awt.Graphics;
 import java.util.HashMap;
 import java.util.Map;
 
+import lab.component.BunsenBurner;
+import lab.component.LabComponent;
+import lab.component.Piston;
 import lab.component.container.Beaker;
 import lab.component.container.Bulb;
 import lab.component.container.Flask;
@@ -14,16 +17,19 @@ import lab.component.data.DataTable;
 import lab.component.data.Graph;
 import lab.component.fx.Flame;
 import lab.component.fx.ParticleSystem;
-import lab.component.misc.BunsenBurner;
-import lab.component.misc.Piston;
 import lab.component.sensor.Manometer;
 import lab.component.sensor.Thermometer;
 import lab.component.swing.Label;
 import lab.component.swing.input.Button;
+import lab.component.swing.input.CheckBox;
 import lab.component.swing.input.DoubleField;
 import lab.component.swing.input.DoubleSlider;
+import lab.component.swing.input.Dropdown;
+import lab.component.swing.input.LabeledDoubleSlider;
 import lab.component.swing.input.Switch;
 import lab.component.swing.input.TextField;
+import lab.util.HorizontalGraduation;
+import lab.util.VerticalGraduation;
 
 public class ComponentPicker extends LabComponent {
 
@@ -53,7 +59,7 @@ public class ComponentPicker extends LabComponent {
 		final int inputHeight = 30;
 		final int inputWidth = 150;
 		
-		MinimizableComponent inputs = new MinimizableComponent("User Input",300,inputHeight*12,30);
+		MinimizableComponent inputs = new MinimizableComponent("User Input",300,inputHeight*12);
 		inputs.addChild(new Button(150, inputHeight, "Button") {
 
 
@@ -65,14 +71,14 @@ public class ComponentPicker extends LabComponent {
 
 		}, 
 				new CheckBox(inputWidth,inputHeight,"Check Box"), 
-				new DropdownMenu(inputWidth,inputHeight,"Dropdown Menu Item 1","Dropdown Menu Item 2","Dropdown Menu Item 3","Dropdown Menu Item 4","Dropdown Menu Item 5","Dropdown Menu Item 6"), 
-				new LabeledSlider(inputWidth,inputHeight,0,100,.5f,2,0), 
-				new TextField(inputWidth,(int) ((inputHeight/1.75)+.5),"Text Field"), 
-				new NumberField(inputWidth,inputHeight*4,2,1)
+				new Dropdown(inputWidth,inputHeight,"Dropdown Menu Item 1","Dropdown Menu Item 2","Dropdown Menu Item 3","Dropdown Menu Item 4","Dropdown Menu Item 5","Dropdown Menu Item 6"), 
+				new LabeledDoubleSlider(inputWidth,0,100,.5f,2,0), 
+				new TextField(inputWidth,"Text Field"), 
+				new DoubleField(inputWidth,inputHeight*4,2,1)
 		);
 		inputs.setMinimized(true);
 		
-		MinimizableComponent containers = new MinimizableComponent("Containers",300,500,30);
+		MinimizableComponent containers = new MinimizableComponent("Containers",300,500);
 		containers.addChild(
 				new Beaker(50,100),
 				new Bulb(100,100),
@@ -81,11 +87,11 @@ public class ComponentPicker extends LabComponent {
 		);
 		containers.setMinimized(true);
 		
-		MinimizableComponent equipment = new MinimizableComponent("Lab Equipment",300,400,30);
+		MinimizableComponent equipment = new MinimizableComponent("Lab Equipment",300,400);
 		equipment.addChild(new BunsenBurner(50,200), new Piston(100,200));
 		equipment.setMinimized(true);
 		
-		MinimizableComponent sensors = new MinimizableComponent("Sensors",300,400,30);
+		MinimizableComponent sensors = new MinimizableComponent("Sensors",300,400);
 		sensors.addChild(
 				new Thermometer(200),
 				new Manometer(200,300)
@@ -93,9 +99,9 @@ public class ComponentPicker extends LabComponent {
 		sensors.setMinimized(true);
 		DataTable<Double> tempDataTable = new DataTable<Double>(200,200,20,20,DataTable.ROW_AND_COLUMN_TITLES);
 		tempDataTable.setOffset(30, 30);
-		MinimizableComponent analysis = new MinimizableComponent("Analytics",300,300,30);
+		MinimizableComponent analysis = new MinimizableComponent("Analytics",300,300);
 		analysis.addChild(
-				new Graph(200,200,"Graph","X axis","Y axis", new VerticalGraduation(0,100,10,5),new HorizontalGraduation(0,100,10,5)),
+				new Graph(200,200,"Graph","X axis","Y axis", new HorizontalGraduation(0,100,10,5),new VerticalGraduation(0,100,10,5)),
 				
 				tempDataTable
 		);

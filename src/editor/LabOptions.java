@@ -7,7 +7,7 @@ import java.awt.Graphics;
 import lab.component.LabComponent;
 import lab.component.swing.Label;
 import lab.component.swing.input.Button;
-import lab.component.swing.input.NumberField;
+import lab.component.swing.input.DoubleField;
 
 public class LabOptions extends LabComponent {
 
@@ -18,10 +18,10 @@ public class LabOptions extends LabComponent {
 		header.setFont(new Font("default",Font.BOLD,18));
 		
 		Label windowWidth = new Label(100000, 20, "Window width:");
-		NumberField labWidth = new NumberField(250, 20, 10, 0);
+		DoubleField labWidth = new DoubleField(250, 20, 10, 0);
 		
 		Label windowHeight = new Label(100000, 20, "Window height:");
-		NumberField labHeight = new NumberField(250, 20, 10, 0);
+		DoubleField labHeight = new DoubleField(250, 20, 10, 0);
 		
 		Button applyButton = new Button(250, 50, "Apply") {
 

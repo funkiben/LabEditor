@@ -4,27 +4,25 @@ import editor.window.EditorWindow;
 import lab.LabFrame;
 import lab.component.LabComponent;
 import lab.component.container.Flask;
-import lab.component.fx.ParticleSystem;
-
+import editor.MenuBarComponent;
 public class LabEditor extends LabFrame {
 
 	private static final long serialVersionUID = 1L;
-<<<<<<< HEAD
+
 	private EditorWindow componentWindow;
 	private EditorWindow labWindow;
 	private MenuBarComponent menuBar;
-=======
+
 	private EditorWindow testWindow;
+
 	
-	//private MenuBarComponent menuBar;
->>>>>>> refs/remotes/origin/master
 	
 	public LabEditor() {
 		super("Lab Editor", 1500, 800);
 
 		getRoot().setScaleChildren(false);
 		getRoot().setLayout(LabComponent.FREE_FORM);
-<<<<<<< HEAD
+
 		componentWindow = new EditorWindow("Component Picker", 300, 700);
 		componentWindow.getContent().addChild(new ComponentPicker(300, 700));
 		componentWindow.setOffsetY(45);
@@ -37,10 +35,35 @@ public class LabEditor extends LabFrame {
 		labWindow.setMinWidth(300);
 		labWindow.setMinHeight(500);
 		menuBar = new MenuBarComponent(1920, 25) {
-=======
+			@Override
+			public void componentPickerMethod() {
+				if(componentWindow.isVisible()) {
+					componentWindow.setVisible(false);
+					this.getComponentPicker().setSelected(false);
+					
+				} else {
+					componentWindow.setVisible(true);
+					this.getComponentPicker().setSelected(true);
+				}
+			}
+			
+			@Override
+			public void labOptionsMethod() {
+				if(labWindow.isVisible()) {
+					labWindow.setVisible(false);
+					this.getLabOptions().setSelected(false);
+				} else {
+					labWindow.setVisible(true);
+					this.getLabOptions().setSelected(true);
+				}
+			}
+			
+		};
 		
-		/*
-		testWindow = new EditorWindow("Test Window", 300, 500);
+		
+		
+		testWindow = new EditorWindow("TestWindow", 250, 500);
+		testWindow.getContent().setScaleChildren(false);
 		testWindow.getContent().addChild(new ComponentPicker(300, 500));
 		testWindow.setOffsetY(45);
 		testWindow.setMinWidth(300);
@@ -48,7 +71,7 @@ public class LabEditor extends LabFrame {
 		
 		
 		menuBar = new MenuBarComponent(1500, 25) {
->>>>>>> refs/remotes/origin/master
+
 			@Override
 			public void componentPickerMethod() {
 				if(componentWindow.isVisible()) {
@@ -77,16 +100,16 @@ public class LabEditor extends LabFrame {
 		menuBar.setOffsetX(0);
 		
 		addComponent(menuBar);
-<<<<<<< HEAD
+
 		addComponent(componentWindow);
 		addComponent(labWindow);
 		labWindow.setVisible(false);
 
-=======
+
 		
 		
 		addComponent(testWindow);
-		*/
+		
 		
 		testWindow = new EditorWindow("TestWindow", 250, 500);
 		testWindow.getContent().setScaleChildren(false);
@@ -109,7 +132,7 @@ public class LabEditor extends LabFrame {
 		addComponent(testWindow);
 		addComponent(target);
 		
->>>>>>> refs/remotes/origin/master
+
 		start(60);
 	
 		
@@ -117,27 +140,27 @@ public class LabEditor extends LabFrame {
 
 	@Override
 	public void update() {
-<<<<<<< HEAD
+
 		if(componentWindow.isVisible()) {
-=======
-		/*
+
+		
 		if(testWindow.isVisible()) {
->>>>>>> refs/remotes/origin/master
 			menuBar.getComponentPicker().setSelected(true);
 		} else {
 			menuBar.getComponentPicker().setSelected(false);
 		}
-<<<<<<< HEAD
+
 		if(labWindow.isVisible()) {
 			menuBar.getLabOptions().setSelected(true);
 		} else {
 			menuBar.getLabOptions().setSelected(false);
 		}
-=======
-		*/
+
 		
->>>>>>> refs/remotes/origin/master
+		
+
 		
 	}
 
+	}
 }
