@@ -4,7 +4,6 @@ import editor.window.EditorWindow;
 import lab.LabFrame;
 import lab.component.LabComponent;
 import lab.component.container.Flask;
-import lab.component.fx.ParticleSystem;
 import editor.MenuBarComponent;
 public class LabEditor extends LabFrame {
 
@@ -16,6 +15,7 @@ public class LabEditor extends LabFrame {
 
 	private EditorWindow testWindow;
 
+	
 	
 	public LabEditor() {
 		super("Lab Editor", 1500, 800);
@@ -61,7 +61,7 @@ public class LabEditor extends LabFrame {
 		};
 		
 		
-		/*
+		
 		testWindow = new EditorWindow("TestWindow", 250, 500);
 		testWindow.getContent().setScaleChildren(false);
 		testWindow.getContent().addChild(new ComponentPicker(300, 500));
@@ -109,7 +109,7 @@ public class LabEditor extends LabFrame {
 		
 		
 		addComponent(testWindow);
-		*/
+		
 		
 		testWindow = new EditorWindow("TestWindow", 250, 500);
 		testWindow.getContent().setScaleChildren(false);
@@ -162,4 +162,5 @@ public class LabEditor extends LabFrame {
 		
 	}
 
+	}
 }

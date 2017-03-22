@@ -94,7 +94,6 @@ public class MinimizableComponent extends LabComponent {
 		
 	}
 	
-	@Override
 	public void addChild(LabComponent component) {
 		content.addChild(component);
 	}
@@ -104,7 +103,6 @@ public class MinimizableComponent extends LabComponent {
 		content.addChild(components);
 	}
 
-	@Override
 	public void removeChild(LabComponent component) {
 		content.removeChild(component);
 	}
