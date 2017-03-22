@@ -5,10 +5,11 @@ import lab.LabFrame;
 
 public class MenuBarTestLab extends LabFrame {
 
-	private LabEditor labeditor;
+	private static final long serialVersionUID = 8002212076618717085L;
+	
 	
 	public static void main(String[] args) {
-		new LabEditor();
+		LabEditor labeditor = new LabEditor();
 	}
 	
 	
