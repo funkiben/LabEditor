@@ -1,7 +1,7 @@
 package editor.test;
 
-import editor.input.list.MutableIntegerList;
 import lab.LabFrame;
+import lab.component.swing.input.list.MutableIntegerList;
 
 public class MutableListTestLab extends LabFrame {
 
