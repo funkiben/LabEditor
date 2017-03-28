@@ -7,7 +7,7 @@ import java.awt.Graphics;
 import lab.component.LabComponent;
 import lab.component.swing.Label;
 import lab.component.swing.input.Button;
-import lab.component.swing.input.DoubleField;
+import lab.component.swing.input.field.DoubleField;
 
 public class LabOptions extends LabComponent {
 

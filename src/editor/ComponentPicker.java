@@ -22,12 +22,12 @@ import lab.component.sensor.Thermometer;
 import lab.component.swing.Label;
 import lab.component.swing.input.Button;
 import lab.component.swing.input.CheckBox;
-import lab.component.swing.input.DoubleField;
-import lab.component.swing.input.DoubleSlider;
 import lab.component.swing.input.Dropdown;
-import lab.component.swing.input.LabeledDoubleSlider;
 import lab.component.swing.input.Switch;
-import lab.component.swing.input.TextField;
+import lab.component.swing.input.field.DoubleField;
+import lab.component.swing.input.field.TextField;
+import lab.component.swing.input.slider.DoubleSlider;
+import lab.component.swing.input.slider.LabeledDoubleSlider;
 import lab.util.HorizontalGraduation;
 import lab.util.VerticalGraduation;
 

@@ -1,7 +1,7 @@
 package editor.input.list;
 
-import lab.component.swing.input.IntegerField;
-import lab.component.swing.input.TextField;
+import lab.component.swing.input.field.IntegerField;
+import lab.component.swing.input.field.TextField;
 
 public class MutableIntegerList extends PrimitiveMutableList<Integer> {
 

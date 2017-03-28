@@ -3,13 +3,13 @@ package editor.fieldregistry;
 import editor.input.ChangeColorButton;
 import editor.input.list.MutableStringList;
 import lab.component.swing.input.CheckBox;
-import lab.component.swing.input.DoubleField;
-import lab.component.swing.input.DoubleSlider;
 import lab.component.swing.input.Dropdown;
 import lab.component.swing.input.InputComponent;
-import lab.component.swing.input.IntegerField;
-import lab.component.swing.input.IntegerSlider;
-import lab.component.swing.input.TextField;
+import lab.component.swing.input.field.DoubleField;
+import lab.component.swing.input.field.IntegerField;
+import lab.component.swing.input.field.TextField;
+import lab.component.swing.input.slider.DoubleSlider;
+import lab.component.swing.input.slider.IntegerSlider;
 
 public abstract class InputComponentInstantiator {
 
