@@ -7,11 +7,11 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import draw.animation.Animator;
-import draw.animation.DoubleLinearAnimation;
 import lab.component.EmptyComponent;
 import lab.component.LabComponent;
 import lab.util.ClickableArea;
+import lab.util.animation.Animator;
+import lab.util.animation.DoubleLinearAnimation;
 
 public class MinimizableComponent extends LabComponent {
 
